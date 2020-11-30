@@ -1,0 +1,11 @@
+{
+  "name": "firebot-custom-scripts-types",
+  "version": "5.27.0",
+  "description": "Types for Firebot's Custom Scripts",
+  "main": "",
+  "scripts": {},
+  "author": "ebiggz",
+  "license": "ISC",
+  "types": "index.d.ts",
+  "typeScriptVersion": "4.0.2"
+}
