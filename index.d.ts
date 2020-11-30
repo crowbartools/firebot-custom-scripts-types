@@ -9,9 +9,9 @@ export interface FirebotCustomScriptManifest {
 }
 
 type BaseParameter = {
-  description: string;
-  secondaryDescription: string;
-  showBottomHr: string;
+  description?: string;
+  secondaryDescription?: string;
+  showBottomHr?: boolean;
 };
 
 type StringParameter = BaseParameter & {
