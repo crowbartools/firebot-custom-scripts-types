@@ -48,7 +48,7 @@ type EffectListParameter = BaseParameter & {
   type: "effectlist";
 };
 
-type EffectTriggersObject = {
+type TriggersObject = {
   [T in TriggerType]?: T extends "event" ? string[] | boolean : boolean;
 };
 
@@ -145,6 +145,12 @@ type ScriptModules = {
     warn: LeveledLogMethod;
     error: LeveledLogMethod;
   };
+  replaceVariableManager: {
+    registerReplaceVariable(replaceVariable: Firebot.ReplaceVariable): void;
+  };
+  eventFilterManager: {
+    registerFilter(filter: Firebot.EventFilter): void;
+  };
 };
 
 type RunRequest<P extends Record<string, any>> = {
@@ -230,6 +236,42 @@ export namespace Firebot {
     }>;
   };
 
+  type ReplaceVariable = {
+    definition: {
+      handle: string;
+      usage?: string;
+      description: string;
+      examples?: Array<{
+        usage: string;
+        description: string;
+      }>;
+      triggers?: TriggersObject;
+      possibleDataOutput: Array<"text" | "number">;
+    };
+    evaluator(trigger: Trigger, ...args: any[]): any;
+  };
+
+  type EventFilter = {
+    id: string;
+    name: string;
+    description: string;
+    events: Array<{
+      eventSourceId: string;
+      eventId: string;
+    }>;
+    comparisonTypes: string[];
+    valueType: "text" | "preset";
+    presetValues(...args: any[]): Promise<any[]>;
+    predicate(
+      filterSettings: { comparisonType: string; value: any },
+      eventData: {
+        eventSourceId: string;
+        eventId: string;
+        eventMeta: Record<string, any>;
+      }
+    ): Promise<boolean>;
+  };
+
   type EffectType<EffectModel> = {
     definition: {
       id: string;
@@ -237,10 +279,10 @@ export namespace Firebot {
       description: string;
       icon: string;
       categories: EffectCategory[];
-      triggers?: TriggerType[] | EffectTriggersObject;
+      triggers?: TriggerType[] | TriggersObject;
     };
     optionsTemplate: string;
-    optionsController?: VoidFunction;
+    optionsController?: (...args: any[]) => void;
     optionsValidator?: (effect: EffectModel) => string[];
     onTriggerEvent: (event: {
       effect: EffectModel;
