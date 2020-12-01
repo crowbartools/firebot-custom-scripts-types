@@ -280,6 +280,7 @@ export namespace Firebot {
       icon: string;
       categories: EffectCategory[];
       triggers?: TriggerType[] | TriggersObject;
+      dependencies?: Array<"chat">;
     };
     optionsTemplate: string;
     optionsController?: (...args: any[]) => void;
