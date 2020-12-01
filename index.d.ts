@@ -1,13 +1,3 @@
-export interface FirebotCustomScriptManifest {
-  name: string;
-  description: string;
-  version: string;
-  author: string;
-  website?: string;
-  startupOnly?: boolean;
-  firebotVersion?: "5";
-}
-
 type BaseParameter = {
   description?: string;
   secondaryDescription?: string;
@@ -16,6 +6,7 @@ type BaseParameter = {
 
 type StringParameter = BaseParameter & {
   type: "string";
+  useTextArea?: boolean;
   default: string;
 };
 
@@ -40,15 +31,28 @@ type EnumParameter = BaseParameter & {
   default: string | number;
 };
 
-export type Parameter =
-  | StringParameter
-  | PasswordParameter
-  | BooleanParameter
-  | NumberParameter
-  | EnumParameter;
-export type DefaultParametersConfig = Record<string, Parameter>;
+type FilepathParameter = BaseParameter & {
+  type: "filepath";
+  fileOptions?: {
+    directoryOnly: boolean;
+    filters: Array<{
+      name: string;
+      extensions: string[];
+    }>;
+    title: string;
+    buttonLabel: string;
+  };
+};
 
-type FirebotAccount = {
+type EffectListParameter = BaseParameter & {
+  type: "effectlist";
+};
+
+type EffectTriggersObject = {
+  [T in TriggerType]?: T extends "event" ? string[] | boolean : boolean;
+};
+
+type UserAccount = {
   username: string;
   displayName: string;
   userId: string;
@@ -60,7 +64,18 @@ type FirebotAccount = {
     refresh_token: string;
   };
 };
-type FirebotTriggerType =
+
+type CustomScriptManifest = {
+  name: string;
+  description: string;
+  version: string;
+  author: string;
+  website?: string;
+  startupOnly?: boolean;
+  firebotVersion?: "5";
+};
+
+type TriggerType =
   | "command"
   | "custom_script"
   | "startup_script"
@@ -72,41 +87,198 @@ type FirebotTriggerType =
   | "preset"
   | "manual";
 
-export type RunRequest<P extends Record<string, any>> = {
+type Trigger = {
+  type: TriggerType;
+  metadata: {
+    username: string;
+    hotkey?: any;
+    command?: any;
+    userCommand?: any;
+    chatMessage?: any;
+    event?: { id: string; name: string };
+    eventSource?: { id: string; name: string };
+    eventData?: Record<string, unknown>;
+    [x: string]: unknown;
+  };
+};
+
+interface LeveledLogMethod {
+  (msg: string, ...meta: any[]): void;
+}
+
+type ScriptModules = {
+  effectManager: {
+    registerEffect: <EffectModel>(
+      effectType: Firebot.EffectType<EffectModel>
+    ) => void;
+  };
+  eventManager: {
+    registerEventSource: (eventSource: Firebot.EventSource) => void;
+    triggerEvent: (
+      sourceId: string,
+      eventId: string,
+      meta: Record<string, unknown>,
+      isManual?: boolean
+    ) => void;
+  };
+  frontendCommunicator: {
+    send(eventName: string, data: unknown): void;
+    on<ExpectedArgs extends Array<any> = [], ReturnPayload = void>(
+      eventName: string,
+      callback: (...args: ExpectedArgs[]) => ReturnPayload
+    ): void;
+    onAsync<ExpectedArgs extends Array<any> = [], ReturnPayload = void>(
+      eventName: string,
+      callback: (...args: ExpectedArgs[]) => Promise<ReturnPayload>
+    ): void;
+  };
+  twitchChat: {
+    sendChatMessage(
+      message: string,
+      whisperTarget?: string,
+      accountType?: "bot" | "streamer"
+    ): void;
+  };
+  logger: {
+    debug: LeveledLogMethod;
+    info: LeveledLogMethod;
+    warn: LeveledLogMethod;
+    error: LeveledLogMethod;
+  };
+};
+
+type RunRequest<P extends Record<string, any>> = {
   parameters: P;
   modules: any;
   firebot: {
     accounts: {
-      streamer: FirebotAccount;
-      bot: FirebotAccount;
+      streamer: UserAccount;
+      bot: UserAccount;
     };
     settings: {
       webServerPort: number;
     };
     version: string;
   };
-  trigger: {
-    type: FirebotTriggerType;
-    metadata: {
-      username: string;
-      hotkey?: any;
-      command?: any;
-      userCommand?: any;
-      chatMessage?: any;
-      event?: { id: string; name: string };
-      eventSource?: { id: string; name: string };
-      eventData?: Record<string, unknown>;
-      [x: string]: unknown;
-    };
-  };
+  trigger: Trigger;
 };
 
-export interface FirebotCustomScript<P extends Record<string, any> = {}> {
-  getScriptManifest():
-    | FirebotCustomScriptManifest
-    | PromiseLike<FirebotCustomScriptManifest>;
-  getDefaultParameters(): DefaultParametersConfig;
-  run(runRequest: RunRequest<P>): void;
-}
+type ScriptParameter =
+  | StringParameter
+  | PasswordParameter
+  | BooleanParameter
+  | NumberParameter
+  | EnumParameter;
 
-export as namespace FirebotCustomScripts;
+type DefaultParametersConfig<P> = {
+  [K in keyof P]: P[K] extends string
+    ? StringParameter | PasswordParameter | FilepathParameter
+    : P[K] extends number
+    ? NumberParameter
+    : P[K] extends boolean
+    ? BooleanParameter
+    : P[K] extends Array<any>
+    ? EnumParameter
+    : P[K] extends Firebot.EffectList
+    ? EffectListParameter
+    : ScriptParameter;
+};
+
+type Effect = {
+  id?: string;
+  type: Firebot.KnownEffectType;
+  [x: string]: unknown;
+};
+
+type ScriptReturnObject = {
+  success: boolean;
+  errorMessage?: string;
+  effects: Array<Effect> | Firebot.EffectList;
+  callback?: VoidFunction;
+};
+
+type EffectCategory =
+  | "common"
+  | "chat based"
+  | "Moderation"
+  | "overlay"
+  | "fun"
+  | "integrations"
+  | "advanced"
+  | "scripting";
+
+export namespace Firebot {
+  type CustomScript<P extends Record<string, any> = {}> = {
+    getScriptManifest():
+      | CustomScriptManifest
+      | PromiseLike<CustomScriptManifest>;
+    getDefaultParameters(): DefaultParametersConfig<P>;
+    run(
+      runRequest: RunRequest<P>
+    ): void | ScriptReturnObject | Promise<ScriptReturnObject>;
+  };
+
+  type EventSource = {
+    id: string;
+    name: string;
+    events: Array<{
+      id: string;
+      name: string;
+      description: string;
+      cached?: boolean;
+      manualMetadata?: Record<string, unknown>;
+    }>;
+  };
+
+  type EffectType<EffectModel> = {
+    definition: {
+      id: string;
+      name: string;
+      description: string;
+      icon: string;
+      categories: EffectCategory[];
+      triggers?: TriggerType[] | EffectTriggersObject;
+    };
+    optionsTemplate: string;
+    optionsController?: VoidFunction;
+    optionsValidator?: (effect: EffectModel) => string[];
+    onTriggerEvent: (event: {
+      effect: EffectModel;
+      trigger: Trigger;
+    }) => Promise<boolean>;
+    overlayExtension?: {
+      dependencies: {
+        css: string[];
+        js: string[];
+      };
+      event: {
+        name: string;
+        onOverlayEvent: (data: any) => void;
+      };
+    };
+  };
+
+  type EffectList = {
+    id?: string;
+    queue?: string;
+    queueDuration?: number;
+    list: Effect[];
+  };
+
+  type KnownEffectType =
+    | "firebot:chat"
+    | "firebot:currency"
+    | "firebot:delay"
+    | "firebot:run-effect-list"
+    | "firebot:filewriter"
+    | "firebot:html"
+    | "firebot:loopeffects"
+    | "firebot:playsound"
+    | "firebot:playvideo"
+    | "firebot:randomeffect"
+    | "firebot:runcommand"
+    | "firebot:sequentialeffect"
+    | "firebot:set-user-metadata"
+    | "firebot:showImage"
+    | "firebot:showtext";
+}
