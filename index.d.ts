@@ -149,7 +149,7 @@ type ScriptModules = {
 
 type RunRequest<P extends Record<string, any>> = {
   parameters: P;
-  modules: any;
+  modules: ScriptModules;
   firebot: {
     accounts: {
       streamer: UserAccount;
