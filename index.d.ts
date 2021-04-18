@@ -93,7 +93,7 @@ type Trigger = {
     username: string;
     hotkey?: any;
     command?: any;
-    userCommand?: any;
+    userCommand?: { trigger: string; args: string[] };
     chatMessage?: any;
     event?: { id: string; name: string };
     eventSource?: { id: string; name: string };
