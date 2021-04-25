@@ -1,4 +1,4 @@
-type EventSource = {
+export type EventSource = {
   id: string;
   name: string;
   events: Array<{

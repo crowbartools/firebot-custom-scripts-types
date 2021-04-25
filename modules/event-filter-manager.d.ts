@@ -1,4 +1,4 @@
-type EventFilter = {
+export type EventFilter = {
   id: string;
   name: string;
   description: string;
