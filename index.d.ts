@@ -1,3 +1,11 @@
+import { EffectManager } from "./modules/effect-manager";
+import { EventManager } from "./modules/event-manager";
+import { FrontendCommunicator } from "./modules/frontend-communicator";
+import { TwitchChat } from "./modules/twitch-chat";
+import { Logger } from "./modules/logger";
+import { ReplaceVariableManager } from "./modules/replace-variable-manager";
+import { EventFilterManager } from "./modules/event-filter-manager";
+
 type BaseParameter = {
   description?: string;
   secondaryDescription?: string;
@@ -102,55 +110,14 @@ type Trigger = {
   };
 };
 
-interface LeveledLogMethod {
-  (msg: string, ...meta: any[]): void;
-}
-
 type ScriptModules = {
-  effectManager: {
-    registerEffect: <EffectModel>(
-      effectType: Firebot.EffectType<EffectModel>
-    ) => void;
-  };
-  eventManager: {
-    registerEventSource: (eventSource: Firebot.EventSource) => void;
-    triggerEvent: (
-      sourceId: string,
-      eventId: string,
-      meta: Record<string, unknown>,
-      isManual?: boolean
-    ) => void;
-  };
-  frontendCommunicator: {
-    send(eventName: string, data: unknown): void;
-    on<ExpectedArgs extends Array<any> = [], ReturnPayload = void>(
-      eventName: string,
-      callback: (...args: ExpectedArgs[]) => ReturnPayload
-    ): void;
-    onAsync<ExpectedArgs extends Array<any> = [], ReturnPayload = void>(
-      eventName: string,
-      callback: (...args: ExpectedArgs[]) => Promise<ReturnPayload>
-    ): void;
-  };
-  twitchChat: {
-    sendChatMessage(
-      message: string,
-      whisperTarget?: string,
-      accountType?: "bot" | "streamer"
-    ): void;
-  };
-  logger: {
-    debug: LeveledLogMethod;
-    info: LeveledLogMethod;
-    warn: LeveledLogMethod;
-    error: LeveledLogMethod;
-  };
-  replaceVariableManager: {
-    registerReplaceVariable(replaceVariable: Firebot.ReplaceVariable): void;
-  };
-  eventFilterManager: {
-    registerFilter(filter: Firebot.EventFilter): void;
-  };
+  effectManager: EffectManager;
+  eventManager: EventManager;
+  frontendCommunicator: FrontendCommunicator;
+  twitchChat: TwitchChat;
+  logger: Logger;
+  replaceVariableManager: ReplaceVariableManager;
+  eventFilterManager: EventFilterManager;
 };
 
 type RunRequest<P extends Record<string, any>> = {
@@ -224,54 +191,6 @@ export namespace Firebot {
     ): void | ScriptReturnObject | Promise<ScriptReturnObject>;
   };
 
-  type EventSource = {
-    id: string;
-    name: string;
-    events: Array<{
-      id: string;
-      name: string;
-      description: string;
-      cached?: boolean;
-      manualMetadata?: Record<string, unknown>;
-    }>;
-  };
-
-  type ReplaceVariable = {
-    definition: {
-      handle: string;
-      usage?: string;
-      description: string;
-      examples?: Array<{
-        usage: string;
-        description: string;
-      }>;
-      triggers?: TriggersObject;
-      possibleDataOutput: Array<"text" | "number">;
-    };
-    evaluator(trigger: Trigger, ...args: any[]): any;
-  };
-
-  type EventFilter = {
-    id: string;
-    name: string;
-    description: string;
-    events: Array<{
-      eventSourceId: string;
-      eventId: string;
-    }>;
-    comparisonTypes: string[];
-    valueType: "text" | "preset";
-    presetValues(...args: any[]): Promise<any[]>;
-    predicate(
-      filterSettings: { comparisonType: string; value: any },
-      eventData: {
-        eventSourceId: string;
-        eventId: string;
-        eventMeta: Record<string, any>;
-      }
-    ): Promise<boolean>;
-  };
-
   type EffectType<EffectModel> = {
     definition: {
       id: string;
@@ -323,5 +242,6 @@ export namespace Firebot {
     | "firebot:sequentialeffect"
     | "firebot:set-user-metadata"
     | "firebot:showImage"
-    | "firebot:showtext";
+    | "firebot:showtext"
+    | "firebot:update-counter";
 }
