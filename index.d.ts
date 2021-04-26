@@ -1,3 +1,4 @@
+import { CurrencyManager } from "./modules/currency-manager";
 import { EffectManager } from "./modules/effect-manager";
 import { EventManager } from "./modules/event-manager";
 import { FrontendCommunicator } from "./modules/frontend-communicator";
@@ -111,6 +112,7 @@ type Trigger = {
 };
 
 type ScriptModules = {
+  currencyManager: CurrencyManager;
   effectManager: EffectManager;
   eventManager: EventManager;
   frontendCommunicator: FrontendCommunicator;
