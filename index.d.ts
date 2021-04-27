@@ -6,6 +6,8 @@ import { TwitchChat } from "./modules/twitch-chat";
 import { Logger } from "./modules/logger";
 import { ReplaceVariableManager } from "./modules/replace-variable-manager";
 import { EventFilterManager } from "./modules/event-filter-manager";
+import { CounterManager } from "./modules/counter-manager";
+import { QuotesManager } from "./modules/quotes-manager";
 
 type BaseParameter = {
   description?: string;
@@ -120,6 +122,8 @@ type ScriptModules = {
   logger: Logger;
   replaceVariableManager: ReplaceVariableManager;
   eventFilterManager: EventFilterManager;
+  counterManager: CounterManager;
+  quotesManager: QuotesManager;
 };
 
 type RunRequest<P extends Record<string, any>> = {
