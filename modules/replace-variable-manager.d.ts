@@ -1,6 +1,6 @@
 import { Trigger, TriggersObject } from "../index";
 
-type ReplaceVariable = {
+export type ReplaceVariable = {
   definition: {
     handle: string;
     usage?: string;
