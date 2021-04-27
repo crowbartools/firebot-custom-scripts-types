@@ -6,6 +6,7 @@ import { TwitchChat } from "./modules/twitch-chat";
 import { Logger } from "./modules/logger";
 import { ReplaceVariableManager } from "./modules/replace-variable-manager";
 import { EventFilterManager } from "./modules/event-filter-manager";
+import { UserDb } from "./modules/user-db";
 import { CounterManager } from "./modules/counter-manager";
 import { QuotesManager } from "./modules/quotes-manager";
 
@@ -122,6 +123,7 @@ type ScriptModules = {
   logger: Logger;
   replaceVariableManager: ReplaceVariableManager;
   eventFilterManager: EventFilterManager;
+  userDb: UserDb;
   counterManager: CounterManager;
   quotesManager: QuotesManager;
 };
