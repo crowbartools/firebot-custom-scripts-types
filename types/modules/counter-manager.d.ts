@@ -1,4 +1,4 @@
-import { Effect } from "../index";
+import { Effect, EffectList } from "../effects";
 
 type Counter = {
   id: string;
@@ -8,15 +8,15 @@ type Counter = {
   /**
    * Effects that are triggered when the counter value has reached its maximal value.
    */
-  maximumEffects: { id: string; list: Effect[] };
+  maximumEffects: EffectList;
   /**
    * Effects that are triggered when the counter value has reached its minimal value.
    */
-  minimumEffects: { id: string; list: Effect[] };
+  minimumEffects: EffectList;
   /**
    * Effects that are triggered when the counter value is updated.
    */
-  updateEffects: { id: string; list: Effect[] };
+  updateEffects: EffectList;
 };
 
 export type CounterManager = {

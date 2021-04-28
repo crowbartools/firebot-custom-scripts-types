@@ -1,4 +1,4 @@
-import { Trigger, TriggersObject } from "../index";
+import { Trigger, TriggersObject } from "../effects";
 
 export type ReplaceVariable = {
   definition: {

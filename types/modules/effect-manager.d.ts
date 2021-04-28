@@ -1,7 +1,7 @@
-import { Firebot } from "../index";
+import { EffectType } from "../effects";
 
 export type EffectManager = {
   registerEffect: <EffectModel>(
-    effectType: Firebot.EffectType<EffectModel>
+    effectType: EffectType<EffectModel>
   ) => void;
 };
