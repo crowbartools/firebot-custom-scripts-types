@@ -9,7 +9,7 @@
   },
   "author": "ebiggz",
   "license": "ISC",
-  "types": "index.d.ts",
+  "types": "/types/index.d.ts",
   "typeScriptVersion": "4.0.2",
   "devDependencies": {
     "prettier": "2.2.1"
