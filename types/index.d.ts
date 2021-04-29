@@ -10,6 +10,7 @@ import { UserDb } from "./modules/user-db";
 import { CounterManager } from "./modules/counter-manager";
 import { QuotesManager } from "./modules/quotes-manager";
 import Effects from "./effects";
+import { TwitchApi } from "./modules/twitch-api";
 
 type BaseParameter = {
   description?: string;
@@ -89,6 +90,7 @@ type ScriptModules = {
   effectManager: EffectManager;
   eventManager: EventManager;
   frontendCommunicator: FrontendCommunicator;
+  twitchApi: TwitchApi;
   twitchChat: TwitchChat;
   logger: Logger;
   replaceVariableManager: ReplaceVariableManager;
@@ -96,6 +98,8 @@ type ScriptModules = {
   userDb: UserDb;
   counterManager: CounterManager;
   quotesManager: QuotesManager;
+  /** Remove the below line after we have all modules defined */
+  [x: string]: unknown;
 };
 
 type RunRequest<P extends Record<string, any>> = {
@@ -142,7 +146,6 @@ type ScriptReturnObject = {
   callback?: VoidFunction;
 };
 
-
 export namespace Firebot {
   type CustomScript<P extends Record<string, any> = {}> = {
     getScriptManifest():
@@ -155,6 +158,6 @@ export namespace Firebot {
   };
 
   type EffectType<EffectModel> = Effects.EffectType<EffectModel>;
-  
-  type EffectList = Effects.EffectList
+
+  type EffectList = Effects.EffectList;
 }
