@@ -11,7 +11,7 @@ import { EventFilterManager } from "./modules/event-filter-manager";
 import { UserDb } from "./modules/user-db";
 import { CounterManager } from "./modules/counter-manager";
 import { QuotesManager } from "./modules/quotes-manager";
-import Effects from "./effects";
+import { Effects } from "./effects";
 import { TwitchApi } from "./modules/twitch-api";
 
 type BaseParameter = {
