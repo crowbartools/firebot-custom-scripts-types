@@ -3,6 +3,7 @@ import { CustomVariableManager } from "./modules/custom-variable-manager";
 import { EffectManager } from "./modules/effect-manager";
 import { EventManager } from "./modules/event-manager";
 import { FrontendCommunicator } from "./modules/frontend-communicator";
+import { FirebotRolesManager } from "./modules/firebot-roles-manager";
 import { TwitchChat } from "./modules/twitch-chat";
 import { Logger } from "./modules/logger";
 import { ReplaceVariableManager } from "./modules/replace-variable-manager";
@@ -98,6 +99,7 @@ type ScriptModules = {
   replaceVariableManager: ReplaceVariableManager;
   eventFilterManager: EventFilterManager;
   userDb: UserDb;
+  firebotRolesManager: FirebotRolesManager;
   counterManager: CounterManager;
   quotesManager: QuotesManager;
   /** Remove the below line after we have all modules defined */
