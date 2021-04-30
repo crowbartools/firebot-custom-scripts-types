@@ -13,6 +13,7 @@ import { CounterManager } from "./modules/counter-manager";
 import { QuotesManager } from "./modules/quotes-manager";
 import { Effects } from "./effects";
 import { TwitchApi } from "./modules/twitch-api";
+import { Utils } from "./modules/utils";
 
 type BaseParameter = {
   description?: string;
@@ -102,6 +103,7 @@ type ScriptModules = {
   firebotRolesManager: FirebotRolesManager;
   counterManager: CounterManager;
   quotesManager: QuotesManager;
+  utils: Utils;
   /** Remove the below line after we have all modules defined */
   [x: string]: unknown;
 };
