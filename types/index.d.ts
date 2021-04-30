@@ -1,4 +1,5 @@
 import { CurrencyManager } from "./modules/currency-manager";
+import { CustomVariableManager } from "./modules/custom-variable-manager";
 import { EffectManager } from "./modules/effect-manager";
 import { EventManager } from "./modules/event-manager";
 import { FrontendCommunicator } from "./modules/frontend-communicator";
@@ -93,6 +94,7 @@ type ScriptModules = {
   twitchApi: TwitchApi;
   twitchChat: TwitchChat;
   logger: Logger;
+  customVariableManager: CustomVariableManager;
   replaceVariableManager: ReplaceVariableManager;
   eventFilterManager: EventFilterManager;
   userDb: UserDb;
