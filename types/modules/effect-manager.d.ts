@@ -1,4 +1,5 @@
-import { EffectType } from "../effects";
+import { Effects } from "../effects";
+import EffectType = Effects.EffectType;
 
 export type EffectManager = {
   registerEffect: <EffectModel>(

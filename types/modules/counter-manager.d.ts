@@ -1,4 +1,5 @@
-import { Effect, EffectList } from "../effects";
+import { Effects } from "../effects";
+import EffectList = Effects.EffectList;
 
 type Counter = {
   id: string;
