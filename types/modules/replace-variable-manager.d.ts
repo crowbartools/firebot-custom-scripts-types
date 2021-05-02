@@ -1,4 +1,6 @@
-import { Trigger, TriggersObject } from "../effects";
+import { Effects } from "../effects";
+import TriggersObject = Effects.TriggersObject;
+import Trigger = Effects.Trigger;
 
 export type ReplaceVariable = {
   definition: {

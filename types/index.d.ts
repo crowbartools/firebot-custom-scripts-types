@@ -14,6 +14,7 @@ import { QuotesManager } from "./modules/quotes-manager";
 import { Effects } from "./effects";
 import { TwitchApi } from "./modules/twitch-api";
 import { Utils } from "./modules/utils";
+import { GameManager } from "./modules/game-manager";
 
 type BaseParameter = {
   description?: string;
@@ -93,6 +94,7 @@ type ScriptModules = {
   effectManager: EffectManager;
   eventManager: EventManager;
   frontendCommunicator: FrontendCommunicator;
+  gameManager: GameManager;
   twitchApi: TwitchApi;
   twitchChat: TwitchChat;
   logger: Logger;
