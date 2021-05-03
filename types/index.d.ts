@@ -1,3 +1,4 @@
+import { CurrencyDB } from "./modules/currency-db"
 import { CurrencyManager } from "./modules/currency-manager";
 import { CustomVariableManager } from "./modules/custom-variable-manager";
 import { EffectManager } from "./modules/effect-manager";
@@ -90,6 +91,7 @@ type CustomScriptManifest = {
 };
 
 type ScriptModules = {
+  currencyDb: CurrencyDB;
   currencyManager: CurrencyManager;
   effectManager: EffectManager;
   eventManager: EventManager;
