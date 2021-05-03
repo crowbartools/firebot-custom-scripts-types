@@ -12,6 +12,7 @@
   "types": "types/index.d.ts",
   "typeScriptVersion": "4.0.2",
   "devDependencies": {
+    "@types/angular": "^1.8.1",
     "prettier": "2.2.1",
     "twitch": "^4.2.3"
   }

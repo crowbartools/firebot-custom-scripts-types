@@ -1,3 +1,8 @@
+interface EffectScope<EffectModel> extends ng.IScope {
+  effect: EffectModel;
+  [x: string]: unknown;
+}
+
 export namespace Effects {
   type TriggerType =
     | "command"
@@ -60,7 +65,7 @@ export namespace Effects {
 
   type Effect<T = KnownEffectType> = {
     id?: string;
-    type: T
+    type: T;
     [x: string]: unknown;
   };
 
@@ -75,7 +80,10 @@ export namespace Effects {
       dependencies?: Array<"chat">;
     };
     optionsTemplate: string;
-    optionsController?: (...args: any[]) => void;
+    optionsController?: (
+      $scope: EffectScope<EffectModel>,
+      ...args: any[]
+    ) => void;
     optionsValidator?: (effect: EffectModel) => string[];
     onTriggerEvent: (event: {
       effect: EffectModel;
