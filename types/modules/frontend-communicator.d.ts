@@ -8,4 +8,8 @@ export type FrontendCommunicator = {
     eventName: string,
     callback: (...args: ExpectedArgs[]) => Promise<ReturnPayload>
   ): void;
+  fireEventAsync<ReturnPayload = void>(
+    eventName: string,
+    data: unknown
+  ): Promise<ReturnPayload>;
 };
