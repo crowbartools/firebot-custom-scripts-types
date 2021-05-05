@@ -1,3 +1,5 @@
+import * as FsExtra from "fs-extra";
+import * as Path from "path";
 import { CurrencyDB } from "./modules/currency-db"
 import { CurrencyManager } from "./modules/currency-manager";
 import { CustomVariableManager } from "./modules/custom-variable-manager";
@@ -108,6 +110,8 @@ type ScriptModules = {
   counterManager: CounterManager;
   quotesManager: QuotesManager;
   utils: Utils;
+  path: typeof Path;
+  fs: typeof FsExtra;
   /** Remove the below line after we have all modules defined */
   [x: string]: unknown;
 };
