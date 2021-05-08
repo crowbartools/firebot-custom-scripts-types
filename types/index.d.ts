@@ -1,23 +1,24 @@
 import * as FsExtra from "fs-extra";
 import * as Path from "path";
+import { CommandManager } from "./modules/command-manager";
+import { CounterManager } from "./modules/counter-manager";
 import { CurrencyDB } from "./modules/currency-db"
 import { CurrencyManager } from "./modules/currency-manager";
 import { CustomVariableManager } from "./modules/custom-variable-manager";
 import { EffectManager } from "./modules/effect-manager";
-import { EventManager } from "./modules/event-manager";
-import { FrontendCommunicator } from "./modules/frontend-communicator";
-import { FirebotRolesManager } from "./modules/firebot-roles-manager";
-import { TwitchChat } from "./modules/twitch-chat";
-import { Logger } from "./modules/logger";
-import { ReplaceVariableManager } from "./modules/replace-variable-manager";
-import { EventFilterManager } from "./modules/event-filter-manager";
-import { UserDb } from "./modules/user-db";
-import { CounterManager } from "./modules/counter-manager";
-import { QuotesManager } from "./modules/quotes-manager";
 import { Effects } from "./effects";
-import { TwitchApi } from "./modules/twitch-api";
-import { Utils } from "./modules/utils";
+import { EventFilterManager } from "./modules/event-filter-manager";
+import { EventManager } from "./modules/event-manager";
+import { FirebotRolesManager } from "./modules/firebot-roles-manager";
+import { FrontendCommunicator } from "./modules/frontend-communicator";
 import { GameManager } from "./modules/game-manager";
+import { Logger } from "./modules/logger";
+import { QuotesManager } from "./modules/quotes-manager";
+import { ReplaceVariableManager } from "./modules/replace-variable-manager";
+import { TwitchApi } from "./modules/twitch-api";
+import { TwitchChat } from "./modules/twitch-chat";
+import { UserDb } from "./modules/user-db";
+import { Utils } from "./modules/utils";
 
 type BaseParameter = {
   description?: string;
@@ -93,25 +94,26 @@ type CustomScriptManifest = {
 };
 
 type ScriptModules = {
+  commandManager: CommandManager;
+  counterManager: CounterManager;
   currencyDb: CurrencyDB;
   currencyManager: CurrencyManager;
+  customVariableManager: CustomVariableManager;
   effectManager: EffectManager;
+  eventFilterManager: EventFilterManager;
   eventManager: EventManager;
+  firebotRolesManager: FirebotRolesManager;
   frontendCommunicator: FrontendCommunicator;
+  fs: typeof FsExtra;
   gameManager: GameManager;
+  logger: Logger;
+  path: typeof Path;
+  quotesManager: QuotesManager;
+  replaceVariableManager: ReplaceVariableManager;
   twitchApi: TwitchApi;
   twitchChat: TwitchChat;
-  logger: Logger;
-  customVariableManager: CustomVariableManager;
-  replaceVariableManager: ReplaceVariableManager;
-  eventFilterManager: EventFilterManager;
   userDb: UserDb;
-  firebotRolesManager: FirebotRolesManager;
-  counterManager: CounterManager;
-  quotesManager: QuotesManager;
   utils: Utils;
-  path: typeof Path;
-  fs: typeof FsExtra;
   /** Remove the below line after we have all modules defined */
   [x: string]: unknown;
 };
