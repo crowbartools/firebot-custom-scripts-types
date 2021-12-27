@@ -1,5 +1,5 @@
-import { ApiClient } from "twitch";
-import { Team } from "twitch/lib/API/Kraken/Team/Team";
+import { ApiClient } from "@twurple/api";
+import { HelixTeam } from "@twurple/api/lib/api/helix/team/HelixTeam";
 
 type TwitchGame = {
   id: string;
@@ -27,9 +27,54 @@ type ChatUserInfo = {
 
 type ChatRole = "broadcaster" | "sub" | "vip" | "mod";
 
+type ImageSet = {
+  ur11x: string,
+  ur12x: string,
+  ur14x: string
+};
+
+type CustomReward = {
+  broadcasterId: string,
+  broadcasterLogin: string,
+  broadcasterName: string,
+  id: string,
+  title: string,
+  prompt: string,
+  cost: number,
+  image?: ImageSet,
+  defaultImage: ImageSet,
+  backgroundColor: string,
+  isEnabled: boolean,
+  isUserInputRequired: boolean,
+  maxPerStreamSetting: {
+    isEnabled: boolean,
+    maxPerStream: number
+  },
+  maxPerUserPerStreamSetting: {
+    isEnabled: boolean,
+    maxPerUserPerStream: number
+  },
+  globalCooldownSetting: {
+    isEnabled: boolean,
+    globalCooldownSeconds: number
+  },
+  isPaused: boolean,
+  isInStock: boolean,
+  shouldRedemptionsSkipRequestQueue: boolean,
+  redemptionsRedeemedCurrentStream: number,
+  cooldownExpiresAt?: string
+};
+
+type TwitchStreamTag = {
+  id: string,
+  isAuto: boolean,
+  name: string,
+  description: string
+};
+
 export type TwitchApi = {
   getClient(): ApiClient;
-  channel: {
+  channels: {
     triggerAdBreak(adLength?: number): Promise<boolean>;
     getOnlineStatus(username: string): Promise<boolean>;
     getChannelInformation(
@@ -40,26 +85,33 @@ export type TwitchApi = {
     ): Promise<TwitchChannelInformation | null>;
     updateChannelInformation(title?: string, gameId?: string): Promise<void>;
   };
+  channelRewards: {
+    createCustomChannelReward(reward: CustomReward): Promise<CustomReward>;
+    getCustomChannelRewards(onlyManageable?: boolean): Promise<CustomReward[] | null>;
+    getUnmanageableCustomChannelRewards(): Promise<CustomReward[] | null>;
+    updateCustomChannelReward(reward: CustomReward): Promise<boolean>;
+    deleteCustomChannelReward(rewardId: string): Promise<boolean>;
+    getTotalChannelRewardCount(): Promise<number>;
+  };
   users: {
     doesUserFollowChannel(
       username: string,
       channelName: string
     ): Promise<boolean>;
-    toggleFollowOnChannel(
-      channelIdToFollow: string,
-      shouldFollow?: boolean
-    ): Promise<void>;
     getFollowDateForUser(username: string): Promise<Date | undefined>;
-    getUsersChatRoles(userIdOrName: string): Promise<ChatRole[]>;
-    getUserChatInfoByName(username: string): Promise<ChatUserInfo | undefined>;
   };
   teams: {
-    getStreamerTeams(): Promise<Team[] | null>;
-    getMatchingTeamsById(userId: string): Promise<Team[] | null>;
-    getMatchingTeamsByName(username: string): Promise<Team[] | null>;
+    getStreamerTeams(): Promise<HelixTeam[] | null>;
+    getMatchingTeamsById(userId: string): Promise<HelixTeam[] | null>;
+    getMatchingTeamsByName(username: string): Promise<HelixTeam[] | null>;
   };
   categories: {
     getCategoryById(id: string, size?: string): Promise<TwitchGame | undefined>;
     searchCategories(query: string): Promise<TwitchGame[]>;
+  };
+  streamTags: {
+    getAllStreamTags(): Promise<TwitchStreamTag[] | []>;
+    getChannelStreamTags(): Promise<TwitchStreamTag[] | []>;
+    updateChannelStreamTags(tagIds: string[]): Promise<void>;
   };
 };
