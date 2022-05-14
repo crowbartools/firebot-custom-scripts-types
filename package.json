@@ -8,7 +8,11 @@
     "prettier:format": "prettier --write '**/*.{json,ts}'"
   },
   "author": "ebiggz",
-  "contributors": ["DeathRight (BigPimpinVoidkin)"],
+  "contributors": [
+    "pirak",
+    "patchtechtwitch",
+    "DeathRight (BigPimpinVoidkin)"
+  ],
   "license": "ISC",
   "types": "types/index.d.ts",
   "typeScriptVersion": "4.0.2",
@@ -22,5 +26,8 @@
     "@types/node": "^16.0.0",
     "fs-extra": "^10.0.0",
     "moment": "^2.24.0"
+  },
+  "volta": {
+    "node": "14.18.1"
   }
 }
