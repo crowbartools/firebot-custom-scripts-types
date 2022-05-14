@@ -3,6 +3,15 @@ interface EffectScope<EffectModel> extends ng.IScope {
   [x: string]: unknown;
 }
 
+type EffectTriggerResponse = {
+  success: boolean; 
+  //outputs: Record<string, unknown>;
+  execution?: {
+    stop: boolean;
+    bubbleStop: boolean;
+  }
+}
+
 export namespace Effects {
   type TriggerType =
     | "command"
@@ -14,6 +23,7 @@ export namespace Effects {
     | "timer"
     | "counter"
     | "preset"
+    | "quick_action"
     | "manual";
 
   type Trigger = {
@@ -69,7 +79,7 @@ export namespace Effects {
     [x: string]: unknown;
   };
 
-  type EffectType<EffectModel> = {
+  type EffectType<EffectModel, OverlayData = unknown> = {
     definition: {
       id: string;
       name: string;
@@ -82,21 +92,23 @@ export namespace Effects {
     optionsTemplate: string;
     optionsController?: (
       $scope: EffectScope<EffectModel>,
-      ...args: any[]
+      ...args: unknown[]
     ) => void;
     optionsValidator?: (effect: EffectModel) => string[];
     onTriggerEvent: (event: {
       effect: EffectModel;
       trigger: Trigger;
-    }) => Promise<boolean>;
+      sendDataToOverlay: (data: OverlayData, overlayInstance?: string) => void
+    }) => Promise<void | boolean | EffectTriggerResponse>;
     overlayExtension?: {
-      dependencies: {
-        css: string[];
-        js: string[];
+      dependencies?: {
+        globalStyles?: string;
+        css?: string[];
+        js?: string[];
       };
       event: {
         name: string;
-        onOverlayEvent: (data: any) => void;
+        onOverlayEvent: (data: OverlayData) => void;
       };
     };
   };
