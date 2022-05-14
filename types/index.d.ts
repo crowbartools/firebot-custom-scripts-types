@@ -1,5 +1,7 @@
 import * as FsExtra from "fs-extra";
 import * as Path from "path";
+import Moment from "moment";
+import { HTTPServer } from "./modules/httpServer";
 import { CommandManager } from "./modules/command-manager";
 import { CounterManager } from "./modules/counter-manager";
 import { CurrencyDB } from "./modules/currency-db"
@@ -19,6 +21,9 @@ import { TwitchApi } from "./modules/twitch-api";
 import { TwitchChat } from "./modules/twitch-chat";
 import { UserDb } from "./modules/user-db";
 import { Utils } from "./modules/utils";
+import { ConditionManager } from './modules/condition-manager';
+import { RestrictionManager } from "./modules/restriction-manager";
+import { IntegrationManager } from './modules/integration-manager';
 
 type BaseParameter = {
   description?: string;
@@ -94,7 +99,9 @@ type CustomScriptManifest = {
 };
 
 type ScriptModules = {
+  childProcess: unknown;
   commandManager: CommandManager;
+  conditionManager: ConditionManager;
   counterManager: CounterManager;
   currencyDb: CurrencyDB;
   currencyManager: CurrencyManager;
@@ -106,10 +113,18 @@ type ScriptModules = {
   frontendCommunicator: FrontendCommunicator;
   fs: typeof FsExtra;
   gameManager: GameManager;
+  howler: unknown;
+  httpServer: HTTPServer;
+  integrationManager: IntegrationManager;
+  JsonDb: unknown;
   logger: Logger;
+  moment: typeof Moment;
   path: typeof Path;
   quotesManager: QuotesManager;
   replaceVariableManager: ReplaceVariableManager;
+  request: unknown;
+  restrictionManager: RestrictionManager;
+  spawn: unknown;
   twitchApi: TwitchApi;
   twitchChat: TwitchChat;
   userDb: UserDb;
@@ -118,7 +133,7 @@ type ScriptModules = {
   [x: string]: unknown;
 };
 
-type RunRequest<P extends Record<string, any>> = {
+type RunRequest<P extends Record<string, unknown>> = {
   parameters: P;
   modules: ScriptModules;
   firebot: {
