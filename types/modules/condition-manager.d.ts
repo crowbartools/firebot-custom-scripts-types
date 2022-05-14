@@ -1,37 +1,57 @@
-import EventEmitter from 'events';
+import EventEmitter from "events";
 import { Effects } from "../effects";
 import Trigger = Effects.Trigger;
 import TriggerType = Effects.TriggerType;
-import TriggersObject = Effects.TriggersObject
+import TriggersObject = Effects.TriggersObject;
 
-export type ConditionSettings = {
-    type: string,
-    comparisonType: string,
-    leftSideValue: string,
-    rightSideValue: string
+type PresetValue = {
+  value: string;
+  display: string;
 };
 
-export type ConditionType = {
-    id: string,
-    name: string,
-    description: string,
-    comparisonTypes: string[],
-    rightSideValueType: string,
-    leftSideValueType?: string,
-    triggers?: TriggerType[] | TriggersObject,
-    leftSideTextPlaceholder?: string,
-    rightSideTextPlaceholder?: string,
-    getRightSidePresetValues?: Function,
-    getLeftSidePresetValues?: Function,
-    getRightSideValueDisplay?(condition: ConditionSettings, ...args: any): any,
-    getLeftSideValueDisplay?(condition: ConditionSettings, ...args: any): any,
-    valueIsStillValid?(condition: ConditionSettings, ...args: any): any,
-    predicate(conditionSettings: ConditionSettings, trigger: Trigger): any
+type ConditionValueType = "text" | "number" | "preset" | "none";
+
+export type ConditionSettings<
+  ComparisonTypes extends string,
+  LeftSideValueType extends ConditionValueType,
+  RightSideValueType extends ConditionValueType,
+> = {
+  type: string;
+  comparisonType: ComparisonTypes;
+  leftSideValue?: LeftSideValueType extends "number" ? number : string;
+  rightSideValue: RightSideValueType extends "number" ? number : string;
+};
+
+export type ConditionType<
+  ComparisonTypes extends string = "",
+  LeftSideValueType extends ConditionValueType,
+  RightSideValueType extends ConditionValueType,
+> = {
+  id: string;
+  name: string;
+  description: string;
+  comparisonTypes: ComparisonTypes[];
+  rightSideValueType: RightSideValueType;
+  leftSideValueType?: LeftSideValueType;
+  triggers?: TriggerType[] | TriggersObject;
+  leftSideTextPlaceholder?: string;
+  rightSideTextPlaceholder?: string;
+  getRightSidePresetValues?: (...args: unknown) => PresetValue[];
+  getLeftSidePresetValues?: (...args: unknown) => PresetValue[];
+  getRightSideValueDisplay?(
+    condition: ConditionSettings<ComparisonTypes, LeftSideValueType, RightSideValueType>,
+    ...args: unknown
+  ): string;
+  getLeftSideValueDisplay?(condition: ConditionSettings<ComparisonTypes, LeftSideValueType, RightSideValueType>, ...args: unknown): string;
+  valueIsStillValid?(condition: ConditionSettings<ComparisonTypes, LeftSideValueType, RightSideValueType>, ...args: unknown): boolean;
+  predicate(
+    conditionSettings: ConditionSettings<ComparisonTypes, LeftSideValueType, RightSideValueType>,
+    trigger: Trigger
+  ): boolean | Promise<boolean>;
 };
 
 export type ConditionManager = EventEmitter & {
-    registerConditionType(conditionType: ConditionType): void;
-    getConditionTypeById(conditionTypeId: string): ConditionType;
-    getAllConditionTypes(): ConditionType[];
-    runConditions(conditionData: { conditions: ConditionSettings, mode: string }, triggerData: Trigger): Promise<boolean | null>;
+  registerConditionType(conditionType: ConditionType): void;
+  getConditionTypeById(conditionTypeId: string): ConditionType;
+  getAllConditionTypes(): ConditionType[];
 };

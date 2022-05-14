@@ -99,7 +99,7 @@ type CustomScriptManifest = {
 };
 
 type ScriptModules = {
-  childProcess: any;
+  childProcess: unknown;
   commandManager: CommandManager;
   conditionManager: ConditionManager;
   counterManager: CounterManager;
@@ -113,18 +113,18 @@ type ScriptModules = {
   frontendCommunicator: FrontendCommunicator;
   fs: typeof FsExtra;
   gameManager: GameManager;
-  howler: any;
+  howler: unknown;
   httpServer: HTTPServer;
   integrationManager: IntegrationManager;
-  JsonDb: any;
+  JsonDb: unknown;
   logger: Logger;
   moment: typeof Moment;
   path: typeof Path;
   quotesManager: QuotesManager;
   replaceVariableManager: ReplaceVariableManager;
-  request: any;
+  request: unknown;
   restrictionManager: RestrictionManager;
-  spawn: any;
+  spawn: unknown;
   twitchApi: TwitchApi;
   twitchChat: TwitchChat;
   userDb: UserDb;
@@ -133,7 +133,7 @@ type ScriptModules = {
   [x: string]: unknown;
 };
 
-type RunRequest<P extends Record<string, any>> = {
+type RunRequest<P extends Record<string, unknown>> = {
   parameters: P;
   modules: ScriptModules;
   firebot: {
