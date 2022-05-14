@@ -1,6 +1,6 @@
 {
   "name": "firebot-custom-scripts-types",
-  "version": "6.0.0",
+  "version": "5.52.0",
   "description": "Types for Firebot's Custom Scripts",
   "main": "",
   "scripts": {
@@ -16,8 +16,8 @@
     "prettier": "2.2.1"
   },
   "dependencies": {
-    "@twurple/api": "^5.1.0-pre.2",
-    "@twurple/auth": "^5.0.13",
+    "@twurple/api": "5.1.6",
+    "@twurple/auth": "5.1.6",
     "@types/angular": "^1.8.1",
     "@types/node": "^16.0.0",
     "fs-extra": "^10.0.0",
