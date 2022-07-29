@@ -184,7 +184,7 @@ export namespace Firebot {
     getDefaultParameters(): DefaultParametersConfig<P>;
     run(
       runRequest: RunRequest<P>
-    ): void | ScriptReturnObject | Promise<ScriptReturnObject>;
+    ): void | PromiseLike<void> | ScriptReturnObject | Promise<ScriptReturnObject>;
   };
 
   type EffectType<EffectModel> = Effects.EffectType<EffectModel>;
