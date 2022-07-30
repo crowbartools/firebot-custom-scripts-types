@@ -1,7 +1,7 @@
 import * as FsExtra from "fs-extra";
 import * as Path from "path";
 import Moment from "moment";
-import { HTTPServer } from "./modules/httpServer";
+import { FirebotSettings } from "./settings";
 import { CommandManager } from "./modules/command-manager";
 import { CounterManager } from "./modules/counter-manager";
 import { CurrencyDB } from "./modules/currency-db"
@@ -14,6 +14,7 @@ import { EventManager } from "./modules/event-manager";
 import { FirebotRolesManager } from "./modules/firebot-roles-manager";
 import { FrontendCommunicator } from "./modules/frontend-communicator";
 import { GameManager } from "./modules/game-manager";
+import { HttpServerManager } from "./modules/http-server-manager";
 import { Logger } from "./modules/logger";
 import { QuotesManager } from "./modules/quotes-manager";
 import { ReplaceVariableManager } from "./modules/replace-variable-manager";
@@ -114,7 +115,7 @@ type ScriptModules = {
   fs: typeof FsExtra;
   gameManager: GameManager;
   howler: unknown;
-  httpServer: HTTPServer;
+  httpServer: HttpServerManager;
   integrationManager: IntegrationManager;
   JsonDb: unknown;
   logger: Logger;
@@ -141,9 +142,7 @@ type RunRequest<P extends Record<string, unknown>> = {
       streamer: UserAccount;
       bot: UserAccount;
     };
-    settings: {
-      webServerPort: number;
-    };
+    settings: FirebotSettings;
     version: string;
   };
   trigger: Effects.Trigger;
@@ -190,7 +189,7 @@ export namespace Firebot {
      */
     run(
       runRequest: RunRequest<P>
-    ): void | ScriptReturnObject | Promise<ScriptReturnObject>;
+    ): void | PromiseLike<void> | ScriptReturnObject | Promise<ScriptReturnObject>;
 
     /**
      * Called when the user saves script parameters

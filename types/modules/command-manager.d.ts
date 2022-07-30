@@ -100,7 +100,7 @@ type CommandManager = {
   hasSystemCommand: (id: string) => boolean;
 
   getCustomCommandById: (id: string) => Command | undefined;
-  getAllCustomCommands: () => Command[];
+  getAllCustomCommands: () => CommandDefinition[];
   /**
    * Creates a new custom command or updates an existing one.
    * @param command the command to create/update.
