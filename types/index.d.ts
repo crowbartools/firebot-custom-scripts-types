@@ -182,10 +182,25 @@ export namespace Firebot {
     getScriptManifest():
       | CustomScriptManifest
       | PromiseLike<CustomScriptManifest>;
+
     getDefaultParameters(): DefaultParametersConfig<P>;
+
+    /**
+     * Called at app start and when the script is added to Firebot
+     */
     run(
       runRequest: RunRequest<P>
     ): void | ScriptReturnObject | Promise<ScriptReturnObject>;
+
+    /**
+     * Called when the user saves script parameters
+     */
+    parametersUpdated?(parameters: P): void;
+
+    /**
+     * Called when the script is removed from Firebot. Use this to clean up registered effects/connections/etc
+     */
+    stop?(): void;
   };
 
   type EffectType<EffectModel> = Effects.EffectType<EffectModel>;
