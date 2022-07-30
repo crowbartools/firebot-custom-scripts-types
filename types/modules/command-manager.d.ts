@@ -23,6 +23,7 @@ type RestrictionData = {
    * If a chat message should be sent when the restrictions are not met.
    */
   sendFailMessage: boolean;
+  failMessage: string;
   restrictions: any[]; // ToDo: change when restriction-manager and companion types are added
 };
 
@@ -39,6 +40,8 @@ export type SubCommand = {
 
 export type CommandDefinition = {
   id: string;
+  name: string;
+  description: string;
   type: CommandType;
   createdBy: string;
   createdAt: Date;
@@ -76,15 +79,13 @@ export type CommandDefinition = {
   cooldown: Cooldown | undefined;
   effects: EffectList;
   restrictionData: RestrictionData;
-  options: Record<string, any>;
+  options: Record<string, any> | undefined;
   subCommands: SubCommand[] | undefined;
   fallbackSubcommand: SubCommand | undefined;
 };
 
 export type Command = {
   definition: CommandDefinition;
-  active: boolean;
-  trigger: string;
 };
 
 type CommandManager = {
