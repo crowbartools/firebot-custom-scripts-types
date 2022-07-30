@@ -1,0 +1,5 @@
+{
+    "conventionalCommits.scopes": [
+        "Remove active and trigger from Command type since it is already required in the CommandDefinition"
+    ]
+}

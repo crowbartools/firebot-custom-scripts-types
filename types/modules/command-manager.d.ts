@@ -83,8 +83,6 @@ export type CommandDefinition = {
 
 export type Command = {
   definition: CommandDefinition;
-  active: boolean;
-  trigger: string;
 };
 
 type CommandManager = {
