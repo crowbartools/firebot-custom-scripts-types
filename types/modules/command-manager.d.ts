@@ -40,6 +40,7 @@ export type SubCommand = {
 export type CommandDefinition = {
   id: string;
   name: string;
+  description: string;
   type: CommandType;
   createdBy: string;
   createdAt: Date;
