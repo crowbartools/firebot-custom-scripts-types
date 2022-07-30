@@ -78,7 +78,7 @@ export type CommandDefinition = {
   cooldown: Cooldown | undefined;
   effects: EffectList;
   restrictionData: RestrictionData;
-  options: Record<string, any>;
+  options: Record<string, any> | undefined;
   subCommands: SubCommand[] | undefined;
   fallbackSubcommand: SubCommand | undefined;
 };
