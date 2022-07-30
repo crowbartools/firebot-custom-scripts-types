@@ -23,6 +23,7 @@ type RestrictionData = {
    * If a chat message should be sent when the restrictions are not met.
    */
   sendFailMessage: boolean;
+  failMessage: string;
   restrictions: any[]; // ToDo: change when restriction-manager and companion types are added
 };
 
