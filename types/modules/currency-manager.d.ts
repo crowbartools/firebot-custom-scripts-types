@@ -1,5 +1,5 @@
 export type CurrencyManager = {
-    startTimer: () => void,
-    stopTimer: () => void,
-    createAllCurrencyCommands: () => void
+    startTimer: () => void;
+    stopTimer: () => void;
+    createAllCurrencyCommands: () => void;
 };

@@ -3,13 +3,13 @@ export enum FirebotAutoUpdateLevel {
     Bugfix = 1,
     Feature = 2,
     MajorRelease = 3,
-    Betas = 4
+    Betas = 4,
 }
 
 export type FirebotAudioOutputDevice = {
-    label: string,
-    deviceId: string
-}
+    label: string;
+    deviceId: string;
+};
 
 export type FirebotSettings = {
     flushSettingsCache(): void;
@@ -86,4 +86,4 @@ export type FirebotSettings = {
 
     getMinimizeToTray(): boolean;
     setMinimizeToTray(minimizeToTray: boolean): void;
-}
+};
