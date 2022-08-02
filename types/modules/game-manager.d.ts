@@ -98,4 +98,5 @@ export type GameManager = {
    * @param game that should be registered.
    */
   registerGame: (game: FirebotGame) => void;
+  getGameSettings: (string) => GameSettings;
 };
