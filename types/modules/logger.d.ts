@@ -1,10 +1,10 @@
 interface LeveledLogMethod {
-  (msg: string, ...meta: any[]): void;
+    (msg: string, ...meta: any[]): void;
 }
 
 export type Logger = {
-  debug: LeveledLogMethod;
-  info: LeveledLogMethod;
-  warn: LeveledLogMethod;
-  error: LeveledLogMethod;
+    debug: LeveledLogMethod;
+    info: LeveledLogMethod;
+    warn: LeveledLogMethod;
+    error: LeveledLogMethod;
 };

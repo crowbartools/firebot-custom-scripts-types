@@ -1,12 +1,11 @@
 type ActiveChatters = {
-  id: "ActiveChatters",
-  name: "Active Chat User"
+    id: "ActiveChatters";
+    name: "Active Chat User";
 };
 
-type FirebotRole =
-  | ActiveChatters;
+type FirebotRole = ActiveChatters;
 
 export type FirebotRolesManager = {
-  userIsInFirebotRole: (role: FirebotRole, username: string) => boolean;
-  getAllFirebotRolesForViewer: (username: string) => FirebotRole[];
-}
+    userIsInFirebotRole: (role: FirebotRole, username: string) => boolean;
+    getAllFirebotRolesForViewer: (username: string) => FirebotRole[];
+};
