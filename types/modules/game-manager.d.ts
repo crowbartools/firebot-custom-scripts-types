@@ -91,11 +91,12 @@ export type FirebotGame = {
 };
 
 export type GameManager = {
-    /**
-     * Registers a game in the Firebot system.
-     *
-     * Does not register the game if its `id` already exists in the Firebot system.
-     * @param game that should be registered.
-     */
-    registerGame: (game: FirebotGame) => void;
+  /**
+   * Registers a game in the Firebot system.
+   *
+   * Does not register the game if its `id` already exists in the Firebot system.
+   * @param game that should be registered.
+   */
+  registerGame: (game: FirebotGame) => void;
+  getGameSettings: (string) => GameSettings;
 };
