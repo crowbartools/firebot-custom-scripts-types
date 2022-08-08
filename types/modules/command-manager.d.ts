@@ -30,6 +30,7 @@ type RestrictionData = {
 export type SubCommand = BasicCommandDefinition & {
     arg: string;
     usage: string;
+    minArgs?: number;
     regex?: boolean;
     fallback?: boolean;
 };
