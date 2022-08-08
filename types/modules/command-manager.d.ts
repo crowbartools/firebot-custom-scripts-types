@@ -81,19 +81,21 @@ export type CommandDefinition = {
     fallbackSubcommand?: SubCommand | undefined;
 };
 
+type UserCommand = {
+    trigger: string;
+    args: string[];
+    triggeredSubcmd?: CommandDefinition;
+    isInvalidSubcommandTrigger: boolean;
+    triggeredArg?: string;
+    subcommandId?: string;
+    commandSender: string;
+    senderRoles: string[];
+};
+
 type SystemCommandTriggerEvent = {
     command: CommandDefinition;
     commandOptions: Record<string, any>;
-    userCommand: {
-        trigger: string;
-        args: string[];
-        triggeredSubcmd?: CommandDefinition;
-        isInvalidSubcommandTrigger: boolean;
-        triggeredArg?: string;
-        subcommandId?: string;
-        commandSender: string;
-        senderRoles: string[];
-    };
+    userCommand: UserCommand;
 };
 
 type BasicCommandDefinition = Omit<
