@@ -1,4 +1,3 @@
-import { TypedEmitter } from "tiny-typed-emitter";
 import {
     FirebotParameterCategories,
     FirebotParams,
@@ -47,13 +46,13 @@ export type IntegrationDefinition<
     | { linkType: "other" | "none" }
 );
 
-interface IntegrationEvents {
+export interface IntegrationEvents {
     connected: (id: string) => void;
     disconnected: (id: string) => void;
     "settings-update": (id: string, settings: Record<string, any>) => void;
 }
 
-export class IntegrationEventEmitter extends TypedEmitter<IntegrationEvents> {}
+// export class IntegrationEventEmitter extends TypedEmitter<IntegrationEvents> {}
 
 type LinkData =
     | {
