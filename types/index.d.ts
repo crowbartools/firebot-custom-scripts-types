@@ -210,3 +210,5 @@ export namespace Firebot {
 
     type EffectList = Effects.EffectList;
 }
+
+export * from "./modules/integration-manager";

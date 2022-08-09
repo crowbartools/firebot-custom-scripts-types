@@ -64,7 +64,7 @@ type LinkData =
       }
     | null;
 
-type IntegrationData<Params extends FirebotParams = FirebotParams> = {
+export type IntegrationData<Params extends FirebotParams = FirebotParams> = {
     settings: any;
     userSettings?: Params;
     oauth?: any;
