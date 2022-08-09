@@ -99,7 +99,7 @@ type CustomScriptManifest = {
     firebotVersion?: "5";
 };
 
-type ScriptModules = {
+export type ScriptModules = {
     childProcess: unknown;
     commandManager: CommandManager;
     conditionManager: ConditionManager;
