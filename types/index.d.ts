@@ -26,40 +26,40 @@ import { ConditionManager } from "./modules/condition-manager";
 import { RestrictionManager } from "./modules/restriction-manager";
 import { IntegrationManager } from "./modules/integration-manager";
 
-type BaseParameter = {
+export type BaseParameter = {
     description?: string;
     secondaryDescription?: string;
     showBottomHr?: boolean;
 };
 
-type StringParameter = BaseParameter & {
+export type StringParameter = BaseParameter & {
     type: "string";
     useTextArea?: boolean;
     default: string;
 };
 
-type PasswordParameter = BaseParameter & {
+export type PasswordParameter = BaseParameter & {
     type: "password";
     default: string;
 };
 
-type BooleanParameter = BaseParameter & {
+export type BooleanParameter = BaseParameter & {
     type: "boolean";
     default: boolean;
 };
 
-type NumberParameter = BaseParameter & {
+export type NumberParameter = BaseParameter & {
     type: "number";
     default: number;
 };
 
-type EnumParameter = BaseParameter & {
+export type EnumParameter = BaseParameter & {
     type: "enum";
     options: Array<string | number>;
     default: string | number;
 };
 
-type FilepathParameter = BaseParameter & {
+export type FilepathParameter = BaseParameter & {
     type: "filepath";
     fileOptions?: {
         directoryOnly: boolean;
@@ -72,11 +72,11 @@ type FilepathParameter = BaseParameter & {
     };
 };
 
-type EffectListParameter = BaseParameter & {
+export type EffectListParameter = BaseParameter & {
     type: "effectlist";
 };
 
-type UserAccount = {
+export type UserAccount = {
     username: string;
     displayName: string;
     userId: string;
@@ -89,7 +89,7 @@ type UserAccount = {
     };
 };
 
-type CustomScriptManifest = {
+export type CustomScriptManifest = {
     name: string;
     description: string;
     version: string;
@@ -134,7 +134,7 @@ export type ScriptModules = {
     [x: string]: unknown;
 };
 
-type RunRequest<P extends Record<string, unknown>> = {
+export type RunRequest<P extends Record<string, unknown>> = {
     parameters: P;
     modules: ScriptModules;
     firebot: {
@@ -148,14 +148,14 @@ type RunRequest<P extends Record<string, unknown>> = {
     trigger: Effects.Trigger;
 };
 
-type ScriptParameter =
+export type ScriptParameter =
     | StringParameter
     | PasswordParameter
     | BooleanParameter
     | NumberParameter
     | EnumParameter;
 
-type DefaultParametersConfig<P> = {
+export type DefaultParametersConfig<P> = {
     [K in keyof P]: P[K] extends string
         ? StringParameter | PasswordParameter | FilepathParameter
         : P[K] extends number
@@ -169,7 +169,7 @@ type DefaultParametersConfig<P> = {
         : ScriptParameter;
 };
 
-type ScriptReturnObject = {
+export type ScriptReturnObject = {
     success: boolean;
     errorMessage?: string;
     effects: Array<Effects.Effect> | Firebot.EffectList;
