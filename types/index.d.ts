@@ -8,6 +8,7 @@ import { CurrencyDB } from "./modules/currency-db";
 import { CurrencyManager } from "./modules/currency-manager";
 import { CustomVariableManager } from "./modules/custom-variable-manager";
 import { EffectManager } from "./modules/effect-manager";
+import { EffectRunner } from "./modules/effect-runner";
 import { Effects } from "./effects";
 import { EventFilterManager } from "./modules/event-filter-manager";
 import { EventManager } from "./modules/event-manager";
@@ -109,6 +110,7 @@ export type ScriptModules = {
     currencyManager: CurrencyManager;
     customVariableManager: CustomVariableManager;
     effectManager: EffectManager;
+    effectRunner: EffectRunner;
     eventFilterManager: EventFilterManager;
     eventManager: EventManager;
     firebotRolesManager: FirebotRolesManager;
