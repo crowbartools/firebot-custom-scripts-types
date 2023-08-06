@@ -14,5 +14,5 @@ export type EffectRunner = {
      * Runs effects from the "effect-list" HTML element.
      * @param processEffectsRequest
      */
-    processEffects: (processEffectsRequest: ProcessEffectsRequest) => EffectRunnerOutput
+    processEffects: (processEffectsRequest: ProcessEffectsRequest) => Promise<EffectRunnerOutput>
 }
