@@ -18,6 +18,7 @@ import { HttpServerManager } from "./modules/http-server-manager";
 import { Logger } from "./modules/logger";
 import { QuotesManager } from "./modules/quotes-manager";
 import { ReplaceVariableManager } from "./modules/replace-variable-manager";
+import { ResourceTokenManager } from "./modules/resource-token-manager";
 import { TwitchApi } from "./modules/twitch-api";
 import { TwitchChat } from "./modules/twitch-chat";
 import { UserDb } from "./modules/user-db";
@@ -123,6 +124,7 @@ export type ScriptModules = {
     path: typeof Path;
     quotesManager: QuotesManager;
     replaceVariableManager: ReplaceVariableManager;
+    resourceTokenManager: ResourceTokenManager;
     request: unknown;
     restrictionManager: RestrictionManager;
     spawn: unknown;
