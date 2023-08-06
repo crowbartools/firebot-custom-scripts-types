@@ -1,3 +1,6 @@
+import {Effects} from "../effects";
+import Trigger = Effects.Trigger;
+
 type EffectRunnerOutput = {
     success: boolean;
     stopEffectExecution: boolean;
@@ -5,7 +8,7 @@ type EffectRunnerOutput = {
 } | null // When sending effects to a queue
 
 type ProcessEffectsRequest = {
-    trigger: any;
+    trigger: Trigger;
     effects: any;
 }
 
