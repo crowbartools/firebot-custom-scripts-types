@@ -53,9 +53,9 @@ export type NumberParameter = BaseParameter & {
     default: number;
 };
 
-export type EnumParameter = BaseParameter & {
+export type EnumParameter<G = string | number> = BaseParameter & {
     type: "enum";
-    options: Array<string | number>;
+    options: Array<G>;
     default: string | number;
 };
 
@@ -134,8 +134,12 @@ export type ScriptModules = {
     [x: string]: unknown;
 };
 
+export type RunRequestParameters<P> = {
+    [K in keyof P]: P[K] extends Array<infer G> ? G : P[K]
+}
+
 export type RunRequest<P extends Record<string, unknown>> = {
-    parameters: P;
+    parameters: RunRequestParameters<P>;
     modules: ScriptModules;
     firebot: {
         accounts: {
@@ -162,8 +166,8 @@ export type DefaultParametersConfig<P> = {
         ? NumberParameter
         : P[K] extends boolean
         ? BooleanParameter
-        : P[K] extends Array<any>
-        ? EnumParameter
+        : P[K] extends Array<infer G>
+        ? EnumParameter<G>
         : P[K] extends Firebot.EffectList
         ? EffectListParameter
         : ScriptParameter;
