@@ -1,5 +1,6 @@
-import * as FsExtra from "fs-extra";
+import * as FS from "fs";
 import * as Path from "path";
+import ChildProcess from "child_process";
 import Moment from "moment";
 import { FirebotSettings } from "./settings";
 import { CommandManager } from "./modules/command-manager";
@@ -102,7 +103,7 @@ export type CustomScriptManifest = {
 };
 
 export type ScriptModules = {
-    childProcess: unknown;
+    childProcess: typeof ChildProcess;
     commandManager: CommandManager;
     conditionManager: ConditionManager;
     counterManager: CounterManager;
@@ -115,7 +116,7 @@ export type ScriptModules = {
     eventManager: EventManager;
     firebotRolesManager: FirebotRolesManager;
     frontendCommunicator: FrontendCommunicator;
-    fs: typeof FsExtra;
+    fs: typeof FS;
     gameManager: GameManager;
     howler: unknown;
     httpServer: HttpServerManager;
@@ -129,7 +130,7 @@ export type ScriptModules = {
     resourceTokenManager: ResourceTokenManager;
     request: unknown;
     restrictionManager: RestrictionManager;
-    spawn: unknown;
+    spawn: typeof ChildProcess["spawn"];
     twitchApi: TwitchApi;
     twitchChat: TwitchChat;
     userDb: UserDb;
@@ -139,8 +140,8 @@ export type ScriptModules = {
 };
 
 export type RunRequestParameters<P> = {
-    [K in keyof P]: P[K] extends Array<infer G> ? G : P[K]
-}
+    [K in keyof P]: P[K] extends Array<infer G> ? G : P[K];
+};
 
 export type RunRequest<P extends Record<string, unknown>> = {
     parameters: RunRequestParameters<P>;

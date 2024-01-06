@@ -1,31 +1,17 @@
-import { ApiClient } from "@twurple/api";
-import { HelixTeam } from "@twurple/api/lib/api/helix/team/HelixTeam";
+import {
+    ApiClient,
+    HelixChannel,
+    HelixChannelUpdate,
+    HelixTeam,
+    HelixUser,
+    UserIdResolvable,
+} from "@twurple/api";
 
-type TwitchGame = {
+type TwitchCategory = {
     id: string;
     name: string;
     boxArtUrl: string;
 };
-
-type TwitchChannelInformation = {
-    broadcaster_id: string;
-    game_name: string;
-    game_id: string;
-    title: string;
-    broadcaster_language: string;
-};
-
-type ChatUserInfo = {
-    _id: string;
-    login: string;
-    display_name: string;
-    color: string;
-    is_verified_bot: boolean;
-    is_known_bot: boolean;
-    badges: Array<{ id: string; version: string }>;
-};
-
-type ChatRole = "broadcaster" | "sub" | "vip" | "mod";
 
 type ImageSet = {
     ur11x: string;
@@ -65,28 +51,19 @@ type CustomReward = {
     cooldownExpiresAt?: string;
 };
 
-type TwitchStreamTag = {
-    id: string;
-    isAuto: boolean;
-    name: string;
-    description: string;
-};
-
 export type TwitchApi = {
     getClient(): ApiClient;
     channels: {
         triggerAdBreak(adLength?: number): Promise<boolean>;
         getOnlineStatus(username: string): Promise<boolean>;
-        getChannelInformation(
-            broadcasterId: string
-        ): Promise<TwitchChannelInformation | null>;
+        getChannelInformation(broadcasterId: string): Promise<HelixChannel>;
         getChannelInformationByUsername(
             username: string
-        ): Promise<TwitchChannelInformation | null>;
-        updateChannelInformation(
-            title?: string,
-            gameId?: string
-        ): Promise<void>;
+        ): Promise<HelixChannel>;
+        updateChannelInformation(data: HelixChannelUpdate): Promise<void>;
+        raidChannel(targetUserId: string): Promise<boolean>;
+        cancelRaid(): Promise<boolean>;
+        getVips(): Promise<string[]>;
     };
     channelRewards: {
         createCustomChannelReward(reward: CustomReward): Promise<CustomReward>;
@@ -94,9 +71,15 @@ export type TwitchApi = {
             onlyManageable?: boolean
         ): Promise<CustomReward[] | null>;
         getUnmanageableCustomChannelRewards(): Promise<CustomReward[] | null>;
+        getManageableCustomChannelRewards(): Promise<CustomReward[]>;
         updateCustomChannelReward(reward: CustomReward): Promise<boolean>;
         deleteCustomChannelReward(rewardId: string): Promise<boolean>;
         getTotalChannelRewardCount(): Promise<number>;
+        approveOrRejectChannelRewardRedemption(
+            rewardId: string,
+            redemptionId: string,
+            approve?: boolean
+        ): Promise<boolean>;
     };
     users: {
         doesUserFollowChannel(
@@ -104,8 +87,18 @@ export type TwitchApi = {
             channelName: string
         ): Promise<boolean>;
         getFollowDateForUser(username: string): Promise<Date | undefined>;
+        getUserById(userId: string): Promise<HelixUser>;
+        getUserByName(username: string): Promise<HelixUser>;
+        getUsersByNames(usernames: string[]): Promise<HelixUser[]>;
+        blockUser(
+            userId: UserIdResolvable,
+            reason?: "spam" | "harassment" | "other"
+        ): Promise<boolean>;
+        unblockUser(userId: UserIdResolvable): Promise<boolean>;
     };
     teams: {
+        getTeams(broadcasterId: string): Promise<HelixTeam[]>;
+        getMatchingTeams(userId: string): Promise<HelixTeam[]>;
         getStreamerTeams(): Promise<HelixTeam[] | null>;
         getMatchingTeamsById(userId: string): Promise<HelixTeam[] | null>;
         getMatchingTeamsByName(username: string): Promise<HelixTeam[] | null>;
@@ -114,12 +107,7 @@ export type TwitchApi = {
         getCategoryById(
             id: string,
             size?: string
-        ): Promise<TwitchGame | undefined>;
-        searchCategories(query: string): Promise<TwitchGame[]>;
-    };
-    streamTags: {
-        getAllStreamTags(): Promise<TwitchStreamTag[] | []>;
-        getChannelStreamTags(): Promise<TwitchStreamTag[] | []>;
-        updateChannelStreamTags(tagIds: string[]): Promise<void>;
+        ): Promise<TwitchCategory | undefined>;
+        searchCategories(query: string): Promise<TwitchCategory[]>;
     };
 };

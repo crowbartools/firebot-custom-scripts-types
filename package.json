@@ -1,6 +1,6 @@
 {
     "name": "@crowbartools/firebot-custom-scripts-types",
-    "version": "5.53.2-6",
+    "version": "5.60.1",
     "description": "Types for Firebot's Custom Scripts",
     "main": "",
     "scripts": {
@@ -21,12 +21,11 @@
         "prettier": "2.2.1"
     },
     "dependencies": {
-        "@twurple/api": "5.1.6",
-        "@twurple/auth": "5.1.6",
+        "@twurple/api": "^7.0.6",
+        "@twurple/auth": "^7.0.6",
         "@types/angular": "^1.8.1",
         "@types/express": "^4.17.1",
-        "@types/node": "^16.0.0",
-        "fs-extra": "^10.0.0",
+        "@types/node": "^18.18.2",
         "moment": "^2.24.0"
     },
     "volta": {
