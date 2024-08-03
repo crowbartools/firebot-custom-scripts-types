@@ -11,11 +11,23 @@ export type ReplaceVariable = {
             usage: string;
             description: string;
         }>;
+        categories?: VariableCategory[];
         triggers?: TriggersObject;
-        possibleDataOutput: Array<"text" | "number">;
+        possibleDataOutput: Array<
+            "null" | "bool" | "number" | "text" | "array" | "object" | "ALL"
+        >;
+        hidden?: boolean;
     };
     evaluator(trigger: Trigger, ...args: any[]): any;
 };
+
+export type VariableCategory =
+    | "common"
+    | "trigger based"
+    | "user based"
+    | "text"
+    | "numbers"
+    | "advanced";
 
 export type ReplaceVariableManager = {
     registerReplaceVariable(replaceVariable: ReplaceVariable): void;

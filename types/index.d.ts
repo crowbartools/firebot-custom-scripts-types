@@ -28,56 +28,9 @@ import { Utils } from "./modules/utils";
 import { ConditionManager } from "./modules/condition-manager";
 import { RestrictionManager } from "./modules/restriction-manager";
 import { IntegrationManager } from "./modules/integration-manager";
-
-export type BaseParameter = {
-    description?: string;
-    secondaryDescription?: string;
-    showBottomHr?: boolean;
-};
-
-export type StringParameter = BaseParameter & {
-    type: "string";
-    useTextArea?: boolean;
-    default: string;
-};
-
-export type PasswordParameter = BaseParameter & {
-    type: "password";
-    default: string;
-};
-
-export type BooleanParameter = BaseParameter & {
-    type: "boolean";
-    default: boolean;
-};
-
-export type NumberParameter = BaseParameter & {
-    type: "number";
-    default: number;
-};
-
-export type EnumParameter<G = string | number> = BaseParameter & {
-    type: "enum";
-    options: Array<G>;
-    default: string | number;
-};
-
-export type FilepathParameter = BaseParameter & {
-    type: "filepath";
-    fileOptions?: {
-        directoryOnly: boolean;
-        filters: Array<{
-            name: string;
-            extensions: string[];
-        }>;
-        title: string;
-        buttonLabel: string;
-    };
-};
-
-export type EffectListParameter = BaseParameter & {
-    type: "effectlist";
-};
+import { ReplaceVariableFactory } from "./modules/replace-variable-factory";
+import { ParametersConfig } from "./modules/firebot-parameters";
+import { NotificationManager } from "./modules/notification-manager";
 
 export type UserAccount = {
     username: string;
@@ -124,9 +77,11 @@ export type ScriptModules = {
     JsonDb: unknown;
     logger: Logger;
     moment: typeof Moment;
+    notificationManager: NotificationManager;
     path: typeof Path;
     quotesManager: QuotesManager;
     replaceVariableManager: ReplaceVariableManager;
+    replaceVariableFactory: ReplaceVariableFactory;
     resourceTokenManager: ResourceTokenManager;
     request: unknown;
     restrictionManager: RestrictionManager;
@@ -139,9 +94,13 @@ export type ScriptModules = {
     [x: string]: unknown;
 };
 
-export type RunRequestParameters<P> = {
-    [K in keyof P]: P[K] extends Array<infer G> ? G : P[K];
-};
+type ValidParamKeys<T> = {
+    [P in keyof T]: Exclude<T[P], undefined> extends void | undefined | null
+        ? never
+        : P;
+}[keyof T];
+
+export type RunRequestParameters<P> = Pick<P, ValidParamKeys<P>>;
 
 export type RunRequest<P extends Record<string, unknown>> = {
     parameters: RunRequestParameters<P>;
@@ -157,27 +116,6 @@ export type RunRequest<P extends Record<string, unknown>> = {
     trigger: Effects.Trigger;
 };
 
-export type ScriptParameter =
-    | StringParameter
-    | PasswordParameter
-    | BooleanParameter
-    | NumberParameter
-    | EnumParameter;
-
-export type DefaultParametersConfig<P> = {
-    [K in keyof P]: P[K] extends string
-        ? StringParameter | PasswordParameter | FilepathParameter
-        : P[K] extends number
-        ? NumberParameter
-        : P[K] extends boolean
-        ? BooleanParameter
-        : P[K] extends Array<infer G>
-        ? EnumParameter<G>
-        : P[K] extends Firebot.EffectList
-        ? EffectListParameter
-        : ScriptParameter;
-};
-
 export type ScriptReturnObject = {
     success: boolean;
     errorMessage?: string;
@@ -191,7 +129,7 @@ export namespace Firebot {
             | CustomScriptManifest
             | PromiseLike<CustomScriptManifest>;
 
-        getDefaultParameters(): DefaultParametersConfig<P>;
+        getDefaultParameters(): ParametersConfig<P>;
 
         /**
          * Called at app start and when the script is added to Firebot
