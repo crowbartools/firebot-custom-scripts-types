@@ -98,16 +98,7 @@ type ValidParamKeys<T> = {
         : P;
 }[keyof T];
 
-type MappedRunRequestParams<P> = {
-    [K in keyof P]: P[K] extends Array<infer G> ? G : P[K];
-};
-
-export type RunRequestParameters<P> = Pick<
-    MappedRunRequestParams<P>,
-    ValidParamKeys<P>
->;
-
-type Foo = Omit<{ test: string; bar: string }, "bar">;
+export type RunRequestParameters<P> = Pick<P, ValidParamKeys<P>>;
 
 export type RunRequest<P extends Record<string, unknown>> = {
     parameters: RunRequestParameters<P>;
