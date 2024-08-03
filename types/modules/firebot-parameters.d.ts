@@ -1,8 +1,24 @@
 import { Firebot } from "..";
 
-type BaseParameter = {
+export type BaseParameter = {
+    /**
+     * The title of the parameter
+     * Supports markdown
+     */
     title: string;
+    /**
+     * The description of the parameter
+     * Supports markdown
+     */
     description?: string;
+    /**
+     * @deprecated use `title` and `description` instead
+     */
+    secondaryDescription?: string;
+    /**
+     * Shown under the parameter as muted text
+     * Supports markdown
+     */
     tip?: string;
     showBottomHr?: boolean;
     validation?: {
@@ -10,23 +26,23 @@ type BaseParameter = {
     };
 };
 
-type StringParameter = BaseParameter & {
+export type StringParameter = BaseParameter & {
     type: "string";
     useTextArea?: boolean;
     default: string;
 };
 
-type PasswordParameter = BaseParameter & {
+export type PasswordParameter = BaseParameter & {
     type: "password";
     default: string;
 };
 
-type BooleanParameter = BaseParameter & {
+export type BooleanParameter = BaseParameter & {
     type: "boolean";
     default: boolean;
 };
 
-type NumberParameter = BaseParameter & {
+export type NumberParameter = BaseParameter & {
     type: "number";
     placeholder?: string;
     default: number;
@@ -36,13 +52,18 @@ type NumberParameter = BaseParameter & {
     };
 };
 
-type EnumParameter = BaseParameter & {
+export type EnumParameter<G = string | number> = BaseParameter & {
     type: "enum";
-    options: Array<string | number>;
-    default: string | number;
+    options: Array<G>;
+    default: G | undefined;
+    searchable?: boolean;
+    /**
+     * Only used if `searchable` is true
+     */
+    placeholder?: string;
 };
 
-type FilepathParameter = BaseParameter & {
+export type FilepathParameter = BaseParameter & {
     type: "filepath";
     fileOptions?: {
         directoryOnly: boolean;
@@ -55,25 +76,25 @@ type FilepathParameter = BaseParameter & {
     };
 };
 
-type EffectListParameter = BaseParameter & {
+export type EffectListParameter = BaseParameter & {
     type: "effectlist";
 };
 
-type DiscordChannelWebhookParameter = BaseParameter & {
+export type DiscordChannelWebhookParameter = BaseParameter & {
     type: "discord-channel-webhooks";
 };
 
-type CurrencySelectParameter = BaseParameter & {
+export type CurrencySelectParameter = BaseParameter & {
     type: "currency-select";
     default?: string;
 };
 
-type ChatterSelectParameter = BaseParameter & {
+export type ChatterSelectParameter = BaseParameter & {
     type: "chatter-select";
     default?: "Bot" | "Streamer";
 };
 
-type EditableListParameter = BaseParameter & {
+export type EditableListParameter = BaseParameter & {
     type: "editable-list";
     default?: string[];
     settings: {
@@ -85,12 +106,14 @@ type EditableListParameter = BaseParameter & {
     };
 };
 
-type MultiselectParameter = BaseParameter & {
+export type MultiselectParameter<
+    T extends string | number = string | number
+> = BaseParameter & {
     type: "multiselect";
-    default?: string[] | number[];
+    default?: T[];
     settings: {
         options: Array<{
-            id: string | number;
+            id: T;
             name: string;
         }>;
     };
@@ -104,7 +127,7 @@ export type RolePercentageParameterValue = {
     }>;
 };
 
-type RolePercentagesParameter = BaseParameter & {
+export type RolePercentagesParameter = BaseParameter & {
     type: "role-percentages";
     default?: RolePercentageParameterValue;
 };
@@ -117,7 +140,7 @@ export type RoleNumberParameterValue = {
     }>;
 };
 
-type RoleNumberParameter = BaseParameter & {
+export type RoleNumberParameter = BaseParameter & {
     type: "role-numbers";
     default?: RoleNumberParameterValue;
     settings: {
@@ -126,6 +149,42 @@ type RoleNumberParameter = BaseParameter & {
         min?: number;
         max?: number;
     };
+};
+
+export type ButtonParameter = BaseParameter & {
+    type: "button";
+    /**
+     * The event name that will be sent to the backend when the button is clicked
+     */
+    backendEventName: string;
+    buttonText: string;
+    size?: "extraSmall" | "small" | "large";
+    buttonType?:
+        | "default"
+        | "primary"
+        | "success"
+        | "info"
+        | "warning"
+        | "danger"
+        | "link";
+    tooltip?: string;
+    tooltipPlacement?:
+        | "top"
+        | "top-left"
+        | "top-right"
+        | "bottom"
+        | "bottom-left"
+        | "bottom-right"
+        | "left"
+        | "left-top"
+        | "left-bottom"
+        | "right"
+        | "right-top"
+        | "right-bottom";
+};
+
+export type UnknownParameter = BaseParameter & {
+    [key: string]: unknown;
 };
 
 type FirebotParameter =
@@ -141,9 +200,11 @@ type FirebotParameter =
     | EditableListParameter
     | MultiselectParameter
     | RolePercentagesParameter
-    | RoleNumberParameter;
+    | RoleNumberParameter
+    | ButtonParameter
+    | UnknownParameter;
 
-type DefaultParametersConfig<P> = {
+export type ParametersConfig<P> = {
     [K in keyof P]: P[K] extends string
         ?
               | StringParameter
@@ -151,12 +212,17 @@ type DefaultParametersConfig<P> = {
               | FilepathParameter
               | ChatterSelectParameter
               | CurrencySelectParameter
+              | EnumParameter<string>
         : P[K] extends number
-        ? NumberParameter
+        ? NumberParameter | EnumParameter<number>
         : P[K] extends boolean
-        ? BooleanParameter
-        : P[K] extends Array<string> | Array<number>
-        ? EnumParameter | MultiselectParameter | EditableListParameter
+        ? BooleanParameter | EnumParameter<boolean>
+        : P[K] extends Array<string>
+        ? MultiselectParameter<string> | EditableListParameter
+        : P[K] extends Array<number>
+        ? MultiselectParameter<number>
+        : P[K] extends void | undefined | null
+        ? ButtonParameter
         : P[K] extends RolePercentageParameterValue
         ? RolePercentagesParameter
         : P[K] extends RoleNumberParameterValue
@@ -169,7 +235,7 @@ type DefaultParametersConfig<P> = {
 type FirebotParamCategory<ParamConfig extends Record<string, unknown>> = {
     title: string;
     sortRank?: number;
-    settings: DefaultParametersConfig<ParamConfig>;
+    settings: ParametersConfig<ParamConfig>;
 };
 
 export type FirebotParams = Record<string, Record<string, unknown>>;
