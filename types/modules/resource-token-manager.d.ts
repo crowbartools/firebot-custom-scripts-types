@@ -10,4 +10,4 @@ export type ResourceTokenManager = {
      * @param length Duration of resource token in seconds after first time accessing it.
      */
     storeResourcePath: (path: string, length: number) => string;
-}
+};
