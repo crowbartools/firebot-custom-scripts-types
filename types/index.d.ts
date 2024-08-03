@@ -30,6 +30,7 @@ import { RestrictionManager } from "./modules/restriction-manager";
 import { IntegrationManager } from "./modules/integration-manager";
 import { ReplaceVariableFactory } from "./modules/replace-variable-factory";
 import { ParametersConfig } from "./modules/firebot-parameters";
+import { NotificationManager } from "./modules/notification-manager";
 
 export type UserAccount = {
     username: string;
@@ -76,6 +77,7 @@ export type ScriptModules = {
     JsonDb: unknown;
     logger: Logger;
     moment: typeof Moment;
+    notificationManager: NotificationManager;
     path: typeof Path;
     quotesManager: QuotesManager;
     replaceVariableManager: ReplaceVariableManager;
