@@ -1,14 +1,17 @@
 type FirebotUser = {
-    readonly _id: number;
+    readonly _id: string;
     username: string;
     displayName: string;
     profilePicUrl: string;
     twitch: boolean;
     twitchRoles: string[];
     online: boolean;
-    onlineAt: Date;
-    lastSeen: Date;
-    joinDate: Date;
+    /** Timestamp value */
+    onlineAt: number;
+    /** Timestamp value */
+    lastSeen: number;
+    /** Timestamp value */
+    joinDate: number;
     minutesInChannel: number;
     chatMessages: number;
     disableAutoStatAccrual: boolean;
@@ -26,7 +29,24 @@ type FirebotUser = {
 export type UserDb = {
     getTwitchUserByUsername: (
         username: string
-    ) => Promise<FirebotUser | undefined>;
+    ) => Promise<FirebotUser | null>;
+    /**
+     * Creates a new user in the database. Returns the created user if successful.
+     * 
+     * @param userId User's Twitch account ID
+     * @param username Twitch username
+     * @param displayName Twitch display name
+     * @param profilePicUrl Profile pic URL, if available
+     * @param twitchRoles List of role strings, if applicable
+     * @param isOnline Whether the user is currently online, defaults to false
+     */
+    createNewUser: (
+        userId: string,
+        username: string,
+        displayName: string,
+        profilePicUrl?: string,
+        twitchRoles?: string[],
+        isOnline?: boolean) => Promise<FirebotUser | null>;
     /**
      * Updates the given user in the database. Returns true if successful.
      * @param user that should be updated.
