@@ -3,9 +3,15 @@ interface EffectScope<EffectModel> extends ng.IScope {
     [x: string]: unknown;
 }
 
-type EffectTriggerResponse = {
+export type EffectOutput<Outputs = Record<string, unknown>> = {
+    label: string;
+    description: string;
+    defaultName: keyof Outputs;
+};
+
+type EffectTriggerResponse<Outputs = Record<string, unknown>> = {
     success: boolean;
-    //outputs: Record<string, unknown>;
+    outputs?: Outputs;
     execution?: {
         stop: boolean;
         bubbleStop: boolean;
@@ -79,7 +85,11 @@ export namespace Effects {
         [x: string]: unknown;
     };
 
-    type EffectType<EffectModel, OverlayData = unknown> = {
+    type EffectType<
+        EffectModel,
+        OverlayData = unknown,
+        Outputs = Record<string, unknown>
+    > = {
         definition: {
             id: string;
             name: string;
@@ -88,6 +98,7 @@ export namespace Effects {
             categories: EffectCategory[];
             triggers?: TriggerType[] | TriggersObject;
             dependencies?: Array<"chat">;
+            outputs?: EffectOutput<Outputs>[];
         };
         optionsTemplate: string;
         optionsController?: (
@@ -102,7 +113,7 @@ export namespace Effects {
                 data: OverlayData,
                 overlayInstance?: string
             ) => void;
-        }) => Promise<void | boolean | EffectTriggerResponse>;
+        }) => Promise<void | boolean | EffectTriggerResponse<Outputs>>;
         overlayExtension?: {
             dependencies?: {
                 globalStyles?: string;
