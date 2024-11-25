@@ -79,6 +79,7 @@ export type CommandDefinition = {
     options?: Record<string, any> | undefined;
     subCommands?: SubCommand[] | undefined;
     fallbackSubcommand?: SubCommand | undefined;
+    aliases?: string[] | undefined;
 };
 
 type UserCommand = {
