@@ -5,6 +5,7 @@ import Trigger = Effects.Trigger;
 export type ReplaceVariable = {
     definition: {
         handle: string;
+        aliases?: string[];
         usage?: string;
         description: string;
         examples?: Array<{
