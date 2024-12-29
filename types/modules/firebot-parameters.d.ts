@@ -160,27 +160,27 @@ export type ButtonParameter = BaseParameter & {
     buttonText: string;
     size?: "extraSmall" | "small" | "large";
     buttonType?:
-        | "default"
-        | "primary"
-        | "success"
-        | "info"
-        | "warning"
-        | "danger"
-        | "link";
+    | "default"
+    | "primary"
+    | "success"
+    | "info"
+    | "warning"
+    | "danger"
+    | "link";
     tooltip?: string;
     tooltipPlacement?:
-        | "top"
-        | "top-left"
-        | "top-right"
-        | "bottom"
-        | "bottom-left"
-        | "bottom-right"
-        | "left"
-        | "left-top"
-        | "left-bottom"
-        | "right"
-        | "right-top"
-        | "right-bottom";
+    | "top"
+    | "top-left"
+    | "top-right"
+    | "bottom"
+    | "bottom-left"
+    | "bottom-right"
+    | "left"
+    | "left-top"
+    | "left-bottom"
+    | "right"
+    | "right-top"
+    | "right-bottom";
 };
 
 export type UnknownParameter = BaseParameter & {
@@ -207,29 +207,29 @@ type FirebotParameter =
 export type ParametersConfig<P> = {
     [K in keyof P]: P[K] extends string
         ?
-              | StringParameter
-              | PasswordParameter
-              | FilepathParameter
-              | ChatterSelectParameter
-              | CurrencySelectParameter
-              | EnumParameter<string>
+        | StringParameter
+        | PasswordParameter
+        | FilepathParameter
+        | ChatterSelectParameter
+        | CurrencySelectParameter
+        | EnumParameter<string>
         : P[K] extends number
-        ? NumberParameter | EnumParameter<number>
-        : P[K] extends boolean
-        ? BooleanParameter | EnumParameter<boolean>
-        : P[K] extends Array<string>
-        ? MultiselectParameter<string> | EditableListParameter
-        : P[K] extends Array<number>
-        ? MultiselectParameter<number>
-        : P[K] extends void | undefined | null
-        ? ButtonParameter
-        : P[K] extends RolePercentageParameterValue
-        ? RolePercentagesParameter
-        : P[K] extends RoleNumberParameterValue
-        ? RoleNumberParameter
-        : P[K] extends Firebot.EffectList
-        ? EffectListParameter
-        : FirebotParameter;
+            ? NumberParameter | EnumParameter<number>
+            : P[K] extends boolean
+                ? BooleanParameter | EnumParameter<boolean>
+                : P[K] extends Array<string>
+                    ? MultiselectParameter<string> | EditableListParameter
+                    : P[K] extends Array<number>
+                        ? MultiselectParameter<number>
+                        : P[K] extends void | undefined | null
+                            ? ButtonParameter
+                            : P[K] extends RolePercentageParameterValue
+                                ? RolePercentagesParameter
+                                : P[K] extends RoleNumberParameterValue
+                                    ? RoleNumberParameter
+                                    : P[K] extends Firebot.EffectList
+                                        ? EffectListParameter
+                                        : FirebotParameter;
 };
 
 type FirebotParamCategory<ParamConfig extends Record<string, unknown>> = {

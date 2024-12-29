@@ -21,8 +21,8 @@ export type ConditionSettings<
     leftSideValue: LeftSideValueType extends "number"
         ? number
         : LeftSideValueType extends "none"
-        ? undefined
-        : string;
+            ? undefined
+            : string;
     rightSideValue: RightSideValueType extends "number" ? number : string;
 };
 
@@ -44,33 +44,33 @@ export type ConditionType<
     getLeftSidePresetValues?: (...args: unknown[]) => PresetValue[];
     getRightSideValueDisplay?(
         condition: ConditionSettings<
-            ComparisonTypes,
-            LeftSideValueType,
-            RightSideValueType
+        ComparisonTypes,
+        LeftSideValueType,
+        RightSideValueType
         >,
         ...args: unknown[]
     ): string;
     getLeftSideValueDisplay?(
         condition: ConditionSettings<
-            ComparisonTypes,
-            LeftSideValueType,
-            RightSideValueType
+        ComparisonTypes,
+        LeftSideValueType,
+        RightSideValueType
         >,
         ...args: unknown[]
     ): string;
     valueIsStillValid?(
         condition: ConditionSettings<
-            ComparisonTypes,
-            LeftSideValueType,
-            RightSideValueType
+        ComparisonTypes,
+        LeftSideValueType,
+        RightSideValueType
         >,
         ...args: unknown[]
     ): boolean;
     predicate(
         conditionSettings: ConditionSettings<
-            ComparisonTypes,
-            LeftSideValueType,
-            RightSideValueType
+        ComparisonTypes,
+        LeftSideValueType,
+        RightSideValueType
         >,
         trigger: Trigger
     ): boolean | Promise<boolean>;

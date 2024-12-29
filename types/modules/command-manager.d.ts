@@ -100,14 +100,14 @@ type SystemCommandTriggerEvent = {
 };
 
 type BasicCommandDefinition = Omit<
-    CommandDefinition,
-    | "type"
-    | "createdBy"
-    | "createdAt"
-    | "lastEditBy"
-    | "lastEditAt"
-    | "count"
-    | "simple"
+CommandDefinition,
+| "type"
+| "createdBy"
+| "createdAt"
+| "lastEditBy"
+| "lastEditAt"
+| "count"
+| "simple"
 >;
 
 export type SystemCommand<CD extends CommandDefinition = CommandDefinition> = {

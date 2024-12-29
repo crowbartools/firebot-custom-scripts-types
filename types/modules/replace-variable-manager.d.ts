@@ -14,7 +14,7 @@ export type ReplaceVariable = {
         categories?: VariableCategory[];
         triggers?: TriggersObject;
         possibleDataOutput: Array<
-            "null" | "bool" | "number" | "text" | "array" | "object" | "ALL"
+        "null" | "bool" | "number" | "text" | "array" | "object" | "ALL"
         >;
         hidden?: boolean;
     };

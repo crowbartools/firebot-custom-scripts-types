@@ -1,3 +1,6 @@
+
+import ng from "angular";
+
 interface EffectScope<EffectModel> extends ng.IScope {
     effect: EffectModel;
     [x: string]: unknown;

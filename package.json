@@ -2,7 +2,7 @@
     "name": "@crowbartools/firebot-custom-scripts-types",
     "version": "5.63.1",
     "description": "Types for Firebot's Custom Scripts",
-    "main": "",
+    "main": "types/index.ts",
     "scripts": {
         "lint": "npm run prettier:check",
         "prettier:check": "prettier --check '**/*.{json,ts}'",
@@ -15,12 +15,14 @@
         "DeathRight (BigPimpinVoidkin)"
     ],
     "license": "ISC",
-    "types": "types/index.d.ts",
+    "types": "",
     "typeScriptVersion": "4.0.2",
     "devDependencies": {
         "prettier": "2.2.1"
     },
     "dependencies": {
+        "client-oauth2": "^4.3.3",
+        "tiny-typed-emitter": "^2.1.0",
         "@twurple/api": "^7.0.6",
         "@twurple/auth": "^7.0.6",
         "@types/angular": "^1.8.1",

@@ -1,4 +1,5 @@
 import { Effects } from "./effects";
+import ng from "angular";
 import Trigger = Effects.Trigger;
 import TriggerType = Effects.TriggerType;
 import TriggersObject = Effects.TriggersObject;

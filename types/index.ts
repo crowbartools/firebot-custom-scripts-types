@@ -31,6 +31,7 @@ import { IntegrationManager } from "./modules/integration-manager";
 import { ReplaceVariableFactory } from "./modules/replace-variable-factory";
 import { ParametersConfig } from "./modules/firebot-parameters";
 import { NotificationManager } from "./modules/notification-manager";
+import { AuthManager } from "./modules/auth-manager";
 
 export type UserAccount = {
     username: string;
@@ -90,6 +91,7 @@ export type ScriptModules = {
     twitchChat: TwitchChat;
     userDb: UserDb;
     utils: Utils;
+    authManager: AuthManager;
     /** Remove the below line after we have all modules defined */
     [x: string]: unknown;
 };
@@ -124,10 +126,10 @@ export type ScriptReturnObject = {
 };
 
 export namespace Firebot {
-    type CustomScript<P extends Record<string, any> = {}> = {
+    export type CustomScript<P extends Record<string, any> = {}> = {
         getScriptManifest():
-            | CustomScriptManifest
-            | PromiseLike<CustomScriptManifest>;
+        | CustomScriptManifest
+        | PromiseLike<CustomScriptManifest>;
 
         getDefaultParameters(): ParametersConfig<P>;
 
@@ -137,10 +139,10 @@ export namespace Firebot {
         run(
             runRequest: RunRequest<P>
         ):
-            | void
-            | PromiseLike<void>
-            | ScriptReturnObject
-            | Promise<ScriptReturnObject>;
+        | void
+        | PromiseLike<void>
+        | ScriptReturnObject
+        | Promise<ScriptReturnObject>;
 
         /**
          * Called when the user saves script parameters
@@ -153,9 +155,10 @@ export namespace Firebot {
         stop?(): void;
     };
 
-    type EffectType<EffectModel> = Effects.EffectType<EffectModel>;
+    export type EffectType<EffectModel> = Effects.EffectType<EffectModel>;
 
-    type EffectList = Effects.EffectList;
+    export type EffectList = Effects.EffectList;
 }
 
+export { type AuthDetails } from "./modules/auth-manager";
 export * from "./modules/integration-manager";
