@@ -31,7 +31,6 @@ import { IntegrationManager } from "./modules/integration-manager";
 import { ReplaceVariableFactory } from "./modules/replace-variable-factory";
 import { ParametersConfig } from "./modules/firebot-parameters";
 import { NotificationManager } from "./modules/notification-manager";
-import { AuthManager } from "./modules/auth-manager";
 
 export type UserAccount = {
     username: string;
@@ -91,7 +90,6 @@ export type ScriptModules = {
     twitchChat: TwitchChat;
     userDb: UserDb;
     utils: Utils;
-    authManager: AuthManager;
     /** Remove the below line after we have all modules defined */
     [x: string]: unknown;
 };
