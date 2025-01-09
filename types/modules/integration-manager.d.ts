@@ -1,108 +1,108 @@
 import {
+    TypedEmitter,
+    ListenerSignature
+} from "tiny-typed-emitter";
+import {
     FirebotParameterCategories,
-    FirebotParams,
+    FirebotParams
 } from "./firebot-parameters";
+import {
+    AuthProviderDefinition,
+    type AuthDetails
+} from "./auth-manager";
 
-export type Integration<Params extends FirebotParams = FirebotParams> = {
-    definition: IntegrationDefinition<Params>;
-    integration: IntegrationController<Params>;
+export type AccountIdDefinition = {
+    label: string;
+    steps: string;
+}
+export type AccountIdDetails = string
+
+export type IntegrationData<Params extends FirebotParams = FirebotParams> = {
+    settings?: Params;
+    userSettings?: Params;
+    auth?: AuthDetails;
+    accountId?: AccountIdDetails;
+    linked?: boolean;
 };
 
-export type IntegrationDefinition<
-    Params extends FirebotParams = FirebotParams
-> = {
+type LinkIdDefinition = { linkType: "id", idDetails: AccountIdDefinition };
+type LinkAuthDefinition = { linkType: "auth", authProviderDetails: AuthProviderDefinition };
+type LinkOtherDefinition = { linkType: "other" | "none", [key: string]: unknown };
+
+export type IntegrationDefinition<Params extends FirebotParams = FirebotParams> = {
     id: string;
     name: string;
     description: string;
     connectionToggle?: boolean;
     configurable?: boolean;
     settingCategories: FirebotParameterCategories<Params>;
-} & (
-    | {
-          linkType: "id";
-          idDetails: {
-              steps: string;
-          };
-      }
-    | {
-          linkType: "auth";
-          authProviderDetails: {
-              id: string;
-              name: string;
-              redirectUriHost?: string;
-              client: {
-                  id: string;
-                  secret: string;
-              };
-              auth: {
-                  tokenHost: string;
-                  tokenPath: string;
-                  authorizePath: string;
-              };
-              autoRefreshToken?: boolean;
-              scopes: string;
-          };
-      }
-    | { linkType: "other" | "none" }
-);
+} & IntegrationData<Params> & (LinkIdDefinition | LinkAuthDefinition | LinkOtherDefinition);
+
+type LinkIdData = { accountId: AccountIdDetails };
+type LinkAuthData = { auth: AuthDetails };
+export type LinkData = LinkIdData | LinkAuthData | null;
 
 export interface IntegrationEvents {
-    connected: (id: string) => void;
-    disconnected: (id: string) => void;
-    "settings-update": (id: string, settings: Record<string, any>) => void;
+    "connected": (integrationId: string) => void;
+    "disconnected": (integrationId: string) => void;
+    "reconnect": (integrationId: string) => void;
+    "settings-update": (integrationId: string, settings: FirebotParams) => void;
 }
-
-// export class IntegrationEventEmitter extends TypedEmitter<IntegrationEvents> {}
-
-type LinkData =
-    | {
-          accountId: string;
-      }
-    | {
-          auth: Record<string, unknown>;
-      }
-    | null;
-
-export type IntegrationData<Params extends FirebotParams = FirebotParams> = {
-    settings: any;
-    userSettings?: Params;
-    oauth?: any;
-    accountId?: string;
-};
 
 export interface IntegrationController<
-    Params extends FirebotParams = FirebotParams
-> {
+    Params extends FirebotParams = FirebotParams,
+    Events extends IntegrationEvents = IntegrationEvents
+> extends TypedEmitter<ListenerSignature<Events>> {
     connected: boolean;
-    init(
+    init: (
         linked: boolean,
         integrationData: IntegrationData<Params>
-    ): void | PromiseLike<void>;
-    link?(linkData: LinkData): void | PromiseLike<void>;
-    connect?(
+    ) => void | PromiseLike<void>;
+    link?: (linkData: LinkData) => void | PromiseLike<void>;
+    unlink?: () => void | PromiseLike<void>;
+    connect? :(
         integrationData: IntegrationData<Params>
-    ): void | PromiseLike<void>;
-    disconnect?(): void | PromiseLike<void>;
-    onUserSettingsUpdate?(
+    ) => void | PromiseLike<void>;
+    disconnect?: () => void | PromiseLike<void>;
+    onUserSettingsUpdate?: (
         integrationData: IntegrationData<Params>
-    ): void | PromiseLike<void>;
+    ) => void | PromiseLike<void>;
 }
 
-type ObjectOfUnknowns = {
-    [key: string]: any;
+export type Integration<
+    Params extends FirebotParams = FirebotParams,
+    Events extends IntegrationEvents = IntegrationEvents
+> = {
+    definition: IntegrationDefinition<Params>;
+    integration: IntegrationController<Params, Events>;
 };
 
-type IntegrationWithUnknowns = {
-    definition: IntegrationDefinition & ObjectOfUnknowns;
-    integration: IntegrationController & ObjectOfUnknowns;
-};
+export interface IntegrationManagerEvents {
+    "integrationRegistered": (integration: Integration) => void;
+    "integration-connected": (integrationId: string) => void;
+    "integration-disconnected": (integrationId: string) => void;
+    "token-refreshed": (data: {integrationId: string, updatedToken: AuthDetails}) => void;
+}
 
-export type IntegrationManager = {
+export declare class IntegrationManager extends TypedEmitter<IntegrationManagerEvents> {
     registerIntegration(integration: Integration): void;
-    getIntegrationById(integrationId: string): IntegrationWithUnknowns;
-    getIntegrationDefinitionById(
-        integrationId: string
-    ): (IntegrationDefinition & ObjectOfUnknowns) | null;
+    getIntegrationUserSettings<Params extends FirebotParams = FirebotParams>(integrationId: string): Params;
+    saveIntegrationUserSettings(id: string, settings: FirebotParams, notifyInt?: boolean): void;
+    getIntegrationById<Params extends FirebotParams = FirebotParams>(integrationId: string): Integration<Params>;
+    getIntegrationDefinitionById<Params extends FirebotParams = FirebotParams>(integrationId: string): IntegrationDefinition<Params>;
     integrationIsConnectable(integrationId: string): boolean;
-    getAllIntegrationDefinitions(): IntegrationDefinition[];
-};
+    getAllIntegrationDefinitions(): Array<IntegrationDefinition>;
+    saveIntegrationAuth(integration: Integration, authData: AuthDetails): void;
+    getIntegrationAccountId(integrationId: string): AccountIdDetails;
+    saveIntegrationAccountId(integration: Integration, accountId: AccountIdDetails): void;
+    startIntegrationLink(integrationId: string): void;
+    linkIntegration(int: Integration, linkData: LinkData): Promise<void>;
+    unlinkIntegration(integrationId: string): Promise<void>;
+    connectIntegration(integrationId: string): Promise<void>;
+    disconnectIntegration(integrationId: string): Promise<void>;
+    getAuth(integrationId: string): Promise<LinkData>;
+    refreshToken(integrationId: string): Promise<AuthDetails>;
+    integrationCanConnect(integrationId: string): boolean;
+    integrationIsConnected(integrationId: string): boolean;
+    integrationIsLinked(integrationId: string): boolean;
+}

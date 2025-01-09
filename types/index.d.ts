@@ -124,10 +124,10 @@ export type ScriptReturnObject = {
 };
 
 export namespace Firebot {
-    type CustomScript<P extends Record<string, any> = {}> = {
+    export type CustomScript<P extends Record<string, any> = {}> = {
         getScriptManifest():
-            | CustomScriptManifest
-            | PromiseLike<CustomScriptManifest>;
+        | CustomScriptManifest
+        | PromiseLike<CustomScriptManifest>;
 
         getDefaultParameters(): ParametersConfig<P>;
 
@@ -137,10 +137,10 @@ export namespace Firebot {
         run(
             runRequest: RunRequest<P>
         ):
-            | void
-            | PromiseLike<void>
-            | ScriptReturnObject
-            | Promise<ScriptReturnObject>;
+        | void
+        | PromiseLike<void>
+        | ScriptReturnObject
+        | Promise<ScriptReturnObject>;
 
         /**
          * Called when the user saves script parameters
@@ -153,9 +153,10 @@ export namespace Firebot {
         stop?(): void;
     };
 
-    type EffectType<EffectModel> = Effects.EffectType<EffectModel>;
+    export type EffectType<EffectModel> = Effects.EffectType<EffectModel>;
 
-    type EffectList = Effects.EffectList;
+    export type EffectList = Effects.EffectList;
 }
 
+export { type AuthDetails } from "./modules/auth-manager";
 export * from "./modules/integration-manager";

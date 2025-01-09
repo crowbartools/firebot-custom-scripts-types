@@ -4,7 +4,7 @@ import {
     HelixChannelUpdate,
     HelixTeam,
     HelixUser,
-    UserIdResolvable,
+    UserIdResolvable
 } from "@twurple/api";
 
 type TwitchCategory = {

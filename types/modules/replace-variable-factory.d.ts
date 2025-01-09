@@ -8,8 +8,8 @@ type VariableConfig = {
     usage?: string;
     defaultValue?: unknown;
     type:
-        | ReplaceVariable["definition"]["possibleDataOutput"][number]
-        | ReplaceVariable["definition"]["possibleDataOutput"];
+    | ReplaceVariable["definition"]["possibleDataOutput"][number]
+    | ReplaceVariable["definition"]["possibleDataOutput"];
 };
 
 export type ReplaceVariableFactory = {
