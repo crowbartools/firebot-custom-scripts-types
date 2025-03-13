@@ -77,7 +77,8 @@ export namespace Effects {
         | "firebot:set-user-metadata"
         | "firebot:showImage"
         | "firebot:showtext"
-        | "firebot:update-counter";
+        | "firebot:update-counter"
+        | "firebot:cooldown-command";
 
     type Effect<T = KnownEffectType> = {
         id?: string;
