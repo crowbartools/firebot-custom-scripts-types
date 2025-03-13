@@ -114,6 +114,8 @@ export namespace Effects {
                 data: OverlayData,
                 overlayInstance?: string
             ) => void;
+            outputs?: Record<string, unknown>;
+            abortSignal: AbortSignal;
         }) => Promise<void | boolean | EffectTriggerResponse<Outputs>>;
         overlayExtension?: {
             dependencies?: {
