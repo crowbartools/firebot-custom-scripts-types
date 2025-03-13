@@ -107,6 +107,10 @@ export namespace Effects {
             ...args: unknown[]
         ) => void;
         optionsValidator?: (effect: EffectModel) => string[];
+        getDefaultLabel?: (
+            effect: EffectModel,
+            ...args: any[]
+        ) => string | undefined | Promise<string | undefined>;
         onTriggerEvent: (event: {
             effect: EffectModel;
             trigger: Trigger;
