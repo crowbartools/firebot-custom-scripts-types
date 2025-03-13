@@ -1,6 +1,6 @@
 {
     "name": "@crowbartools/firebot-custom-scripts-types",
-    "version": "5.63.1",
+    "version": "5.63.2",
     "description": "Types for Firebot's Custom Scripts",
     "main": "",
     "scripts": {
