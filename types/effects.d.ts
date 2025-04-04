@@ -1,3 +1,5 @@
+import ng from "angular";
+
 interface EffectScope<EffectModel> extends ng.IScope {
     effect: EffectModel;
     [x: string]: unknown;
@@ -20,16 +22,18 @@ type EffectTriggerResponse<Outputs = Record<string, unknown>> = {
 
 export namespace Effects {
     type TriggerType =
-        | "command"
-        | "custom_script"
-        | "startup_script"
         | "api"
+        | "channel_reward"
+        | "command"
+        | "counter"
+        | "custom_script"
         | "event"
         | "hotkey"
-        | "timer"
-        | "counter"
         | "preset"
         | "quick_action"
+        | "scheduled_task"
+        | "startup_script"
+        | "timer"
         | "manual";
 
     type Trigger = {
