@@ -31,6 +31,7 @@ import { IntegrationManager } from "./modules/integration-manager";
 import { ReplaceVariableFactory } from "./modules/replace-variable-factory";
 import { ParametersConfig } from "./modules/firebot-parameters";
 import { NotificationManager } from "./modules/notification-manager";
+import { UIExtensionManager } from "./modules/ui-extension-manager";
 
 export type UserAccount = {
     username: string;
@@ -88,6 +89,8 @@ export type ScriptModules = {
     spawn: typeof ChildProcess["spawn"];
     twitchApi: TwitchApi;
     twitchChat: TwitchChat;
+    /** Added in Firebot v5.64 */
+    uiExtensionManager?: UIExtensionManager;
     userDb: UserDb;
     utils: Utils;
     /** Remove the below line after we have all modules defined */
