@@ -50,6 +50,7 @@ export type FirebotSettingsTypes = {
     CopiedOverlayVersion: string;
     DashboardLayout: object; //TODO
     DebugMode: boolean;
+    DefaultEffectLabelsEnabled: boolean;
     DefaultToAdvancedCommandMode: boolean;
     DefaultTtsVoiceId: string;
     DeleteProfile: string;
@@ -83,6 +84,7 @@ export type FirebotSettingsTypes = {
     TriggerUpcomingAdBreakMinutes: number;
     TtsVoiceRate: number;
     TtsVoiceVolume: number;
+    UseExperimentalTwitchClipUrlResolver: boolean;
     UseOverlayInstances: boolean;
     ViewerDB: boolean;
     ViewerListPageSize: number;
