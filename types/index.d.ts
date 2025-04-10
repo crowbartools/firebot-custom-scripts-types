@@ -12,6 +12,7 @@ import { EffectManager } from "./modules/effect-manager";
 import { EffectRunner } from "./modules/effect-runner";
 import { Effects } from "./effects";
 import { EventFilterManager } from "./modules/event-filter-manager";
+import { EventFilterFactory } from "./modules/event-filter-factory";
 import { EventManager } from "./modules/event-manager";
 import { FirebotRolesManager } from "./modules/firebot-roles-manager";
 import { FrontendCommunicator } from "./modules/frontend-communicator";
@@ -67,6 +68,7 @@ export type ScriptModules = {
     effectManager: EffectManager;
     effectRunner: EffectRunner;
     eventFilterManager: EventFilterManager;
+    eventFilterFactory: EventFilterFactory;
     eventManager: EventManager;
     firebotRolesManager: FirebotRolesManager;
     frontendCommunicator: FrontendCommunicator;
