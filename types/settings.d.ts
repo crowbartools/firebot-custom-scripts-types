@@ -48,7 +48,11 @@ export type FirebotSettingsTypes = {
     ClearChatFeedMode: "never" | "onlyStreamer" | "always";
     ClearCustomScriptCache: boolean;
     CopiedOverlayVersion: string;
-    DashboardLayout: object; //TODO
+    DashboardLayout: {
+        dashboardActivityFeed: string;
+        dashboardChatWindow: string;
+        dashboardViewerList: string;
+    };
     DebugMode: boolean;
     DefaultEffectLabelsEnabled: boolean;
     DefaultToAdvancedCommandMode: boolean;
@@ -68,7 +72,10 @@ export type FirebotSettingsTypes = {
     OpenStreamPreviewOnLaunch: boolean;
     OverlayInstances: string[];
     PersistCustomVariables: boolean;
-    QuickActions: object; //TODO
+    QuickActions: Record<string, {
+        enabled: boolean;
+        position: number;
+    }>;
     RunCustomScripts: boolean;
     SeenAdvancedCommandModePopup: boolean;
     ShowAdBreakIndicator: boolean;
