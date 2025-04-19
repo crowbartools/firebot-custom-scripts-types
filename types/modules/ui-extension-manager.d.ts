@@ -2,6 +2,8 @@ export interface BasePage {
     id: string;
     name: string;
     icon: string;
+    fullPage?: boolean;
+    disableScroll?: boolean;
 }
 
 export interface AngularJsPage extends BasePage {
