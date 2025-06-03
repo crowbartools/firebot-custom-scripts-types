@@ -3,6 +3,7 @@ type SettingType =
     | "number"
     | "boolean"
     | "enum"
+    | "multiselect"
     | "filepath"
     | "currency-select"
     | "chatter-select"
@@ -19,6 +20,14 @@ export type SettingDefinition = {
      */
     tip: string;
     default: any;
+    /**
+     * Options for the "enum" type.
+     */
+    options?: string[];
+    /**
+     * Settings for the "multiselect" type.
+     */
+    settings?: Record<string, any>;
     /**
      * A rank to tell the UI how to order settings.
      */
