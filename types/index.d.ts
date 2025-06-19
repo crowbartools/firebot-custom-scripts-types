@@ -88,6 +88,7 @@ export type ScriptModules = {
     resourceTokenManager: ResourceTokenManager;
     request: unknown;
     restrictionManager: RestrictionManager;
+    scriptDataDir: string;
     spawn: typeof ChildProcess["spawn"];
     twitchApi: TwitchApi;
     twitchChat: TwitchChat;
