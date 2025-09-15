@@ -35,6 +35,7 @@ export type FirebotSettingsTypes = {
     ChatCustomFontFamilyEnabled: boolean;
     ChatCustomFontSize: number;
     ChatCustomFontSizeEnabled: boolean;
+    ChatGetAllEmotes: boolean;
     ChatHideBotAccountMessages: boolean;
     ChatHideDeletedMessages: boolean;
     ChatHideWhispers: boolean;
@@ -49,9 +50,9 @@ export type FirebotSettingsTypes = {
     ClearCustomScriptCache: boolean;
     CopiedOverlayVersion: string;
     DashboardLayout: {
-        dashboardActivityFeed: string;
-        dashboardChatWindow: string;
         dashboardViewerList: string;
+        dashboardChatWindow: string;
+        dashboardActivityFeed: string;
     };
     DebugMode: boolean;
     DefaultEffectLabelsEnabled: boolean;
@@ -69,6 +70,7 @@ export type FirebotSettingsTypes = {
     MaxBackupCount: number | "All";
     MinimizeToTray: boolean;
     NotifyOnBeta: boolean;
+    OpenEffectQueueMonitorOnLaunch: boolean;
     OpenStreamPreviewOnLaunch: boolean;
     OverlayInstances: string[];
     PersistCustomVariables: boolean;
@@ -95,6 +97,7 @@ export type FirebotSettingsTypes = {
     UseOverlayInstances: boolean;
     ViewerDB: boolean;
     ViewerListPageSize: number;
+    WebhookDebugLogs: boolean;
     WebOnlineCheckin: boolean;
     WebServerPort: number;
     WhileLoopEnabled: boolean;

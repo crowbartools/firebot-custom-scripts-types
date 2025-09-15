@@ -33,6 +33,7 @@ import { ReplaceVariableFactory } from "./modules/replace-variable-factory";
 import { ParametersConfig } from "./modules/firebot-parameters";
 import { NotificationManager } from "./modules/notification-manager";
 import { UIExtensionManager } from "./modules/ui-extension-manager";
+import { WebhookManager } from "./modules/webhook-manager";
 
 export type UserAccount = {
     username: string;
@@ -89,13 +90,16 @@ export type ScriptModules = {
     request: unknown;
     restrictionManager: RestrictionManager;
     spawn: typeof ChildProcess["spawn"];
+    scriptDataDir: string;
     twitchApi: TwitchApi;
     twitchChat: TwitchChat;
     /** Added in Firebot v5.64 */
     uiExtensionManager?: UIExtensionManager;
     userDb: UserDb;
     utils: Utils;
-    /** Remove the below line after we have all modules defined */
+    webhookManager: WebhookManager;
+
+    // Remove the below line after we have all modules defined
     [x: string]: unknown;
 };
 
@@ -153,9 +157,10 @@ export namespace Firebot {
         parametersUpdated?(parameters: P): void;
 
         /**
-         * Called when the script is removed from Firebot. Use this to clean up registered effects/connections/etc
+         * Called when the script is stopped in Firebot. Use this to clean up registered effects/connections/etc.
+         * @param uninstalling `true` if the plugin is being uninstalled/deleted from Firebot. Useful when you need to remove persistent data (e.g. webhooks).
          */
-        stop?(): void;
+        stop?(uninstalling?: boolean): void;
     };
 
     type EffectType<EffectModel> = Effects.EffectType<EffectModel>;
