@@ -55,6 +55,7 @@ export type CustomScriptManifest = {
     author: string;
     website?: string;
     startupOnly?: boolean;
+    initBeforeShowingParams?: boolean;
     firebotVersion?: "5";
 };
 
