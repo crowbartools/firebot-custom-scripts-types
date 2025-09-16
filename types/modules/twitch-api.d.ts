@@ -8,6 +8,7 @@ import {
     HelixChannelUpdate,
     HelixChatChatter,
     HelixCheermoteList,
+    HelixClip,
     HelixGoal,
     HelixHypeTrainEvent,
     HelixModerator,
@@ -160,6 +161,23 @@ export type TwitchApi = {
         setUniqueMode(enable?: boolean): Promise<boolean>;
         getColorForUser(targetUserId: string): Promise<string>;
         getAllUserEmotes(account?: "streamer" | "bot"): Promise<HelixUserEmote[]>;
+    };
+    clips: {
+        getClipFromClipUrl(url: string): Promise<HelixClip>;
+        getRandomClipForUserById(
+            userId: UserIdResolvable,
+            limit?: number,
+            isFeatured?: boolean,
+            startDate?: Date,
+            endDate?: Date
+        ): Promise<HelixClip>;
+        getRandomClipForUserByName(
+            username: string,
+            limit?: number,
+            isFeatured?: boolean,
+            startDate?: Date,
+            endDate?: Date
+        ): Promise<HelixClip>;
     };
     goals: {
         getCurrentChannelGoals(): Promise<HelixGoal[]>;
