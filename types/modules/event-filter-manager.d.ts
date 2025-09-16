@@ -34,4 +34,5 @@ export type EventFilter = {
 
 export type EventFilterManager = {
     registerFilter(filter: EventFilter): void;
+    addEventToFilter(filterId: string, eventSourceId: string, eventId: string): void;
 };
