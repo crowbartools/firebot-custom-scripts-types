@@ -52,4 +52,12 @@ export type EventFilterManager = {
      * @param eventId The ID of the event you want to add.
      */
     addEventToFilter: (filterId: string, eventSourceId: string, eventId: string) => void;
+
+    /**
+     * Removes an event from an existing Firebot event filter.
+     * @param filterId The ID of the filter.
+     * @param eventSourceId The ID of the event source you want to remove.
+     * @param eventId The ID of the event you want to remove.
+     */
+    removeEventFromFilter: (filterId: string, eventSourceId: string, eventId: string) => void;
 };
