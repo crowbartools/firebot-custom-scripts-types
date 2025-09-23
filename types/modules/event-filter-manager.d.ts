@@ -33,6 +33,23 @@ export type EventFilter = {
 };
 
 export type EventFilterManager = {
-    registerFilter(filter: EventFilter): void;
-    addEventToFilter(filterId: string, eventSourceId: string, eventId: string): void;
+    /**
+     * Registers an event filter in Firebot.
+     * @param filter The {@linkcode EventFilter} to register.
+     */
+    registerFilter: (filter: EventFilter) => void;
+
+    /**
+     * Unregisters an event filter from Firebot.
+     * @param filterId The ID of the filter to unregister.
+     */
+    unregisterFilter: (filterId: string) => void;
+
+    /**
+     * Adds an event to an existing Firebot event filter.
+     * @param filterId The ID of the filter.
+     * @param eventSourceId The ID of the event source you want to add.
+     * @param eventId The ID of the event you want to add.
+     */
+    addEventToFilter: (filterId: string, eventSourceId: string, eventId: string) => void;
 };
