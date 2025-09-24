@@ -50,4 +50,12 @@ export type ReplaceVariableManager = {
      * @param eventId Event ID of the event to add.
      */
     addEventToVariable: (variableHandle: string, eventSourceId: string, eventId: string) => void;
+
+    /**
+     * Removes an event trigger from an existing Firebot variable.
+     * @param variableHandle Handle of the variable (e.g. `donationAmount`).
+     * @param eventSourceId Event source ID of the event to remove.
+     * @param eventId Event ID of the event to remove.
+     */
+    removeEventFromVariable: (variableHandle: string, eventSourceId: string, eventId: string) => void;
 };
