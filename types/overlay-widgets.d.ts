@@ -1,4 +1,4 @@
-import { FirebotParameterArray } from "./parameters";
+import { FirebotParameterArray } from "./modules/firebot-parameters";
 import { Awaitable } from "./util-types";
 
 export type Position = {
@@ -6,7 +6,7 @@ export type Position = {
     y: number;
     width: number;
     height: number;
-}
+};
 
 export type Animation = {
     /**
@@ -17,15 +17,14 @@ export type Animation = {
      * Custom duration in seconds
      */
     duration?: number;
-}
-
+};
 
 type WidgetEvent<Settings, State> = {
     id: string;
     settings: Settings;
     state: State;
     previewMode: boolean;
-}
+};
 
 type WidgetEventResult<State> = {
     newState?: State | null;
@@ -34,10 +33,11 @@ type WidgetEventResult<State> = {
      * @default false
      */
     persistState?: boolean;
-}
+};
 
-export type WidgetEventHandler<Settings, State> = (event: WidgetEvent<Settings, State>) => Awaitable<WidgetEventResult<State> | undefined>;
-
+export type WidgetEventHandler<Settings, State> = (
+    event: WidgetEvent<Settings, State>
+) => Awaitable<WidgetEventResult<State> | undefined>;
 
 export type OverlayWidgetType<
     Settings extends Record<string, unknown> = Record<string, unknown>,
@@ -100,7 +100,9 @@ export type OverlayWidgetType<
      * If null or undefined, no state display is shown.
      */
     // eslint-disable-next-line no-use-before-define
-    stateDisplay?: (config: OverlayWidgetConfig<Settings, State>) => string | null;
+    stateDisplay?: (
+        config: OverlayWidgetConfig<Settings, State>
+    ) => string | null;
     /**
      * Called before the widget is shown on the overlay. You can modify state here.
      */
@@ -123,7 +125,10 @@ export type OverlayWidgetType<
             globalStyles?: string;
         };
         // eslint-disable-next-line no-use-before-define
-        eventHandler: (event: WidgetOverlayEvent, utils: IOverlayWidgetUtils) => void;
+        eventHandler: (
+            event: WidgetOverlayEvent,
+            utils: IOverlayWidgetUtils
+        ) => void;
         /**
          * Called when the overlay is loaded. Can be async.
          */
@@ -131,7 +136,10 @@ export type OverlayWidgetType<
     };
 };
 
-type OverlayWidgetConfig<Settings = Record<string, unknown>, State = Record<string, unknown>> = {
+type OverlayWidgetConfig<
+    Settings = Record<string, unknown>,
+    State = Record<string, unknown>
+> = {
     id: string;
     name: string;
     type: string;
@@ -151,12 +159,27 @@ type OverlayWidgetConfig<Settings = Record<string, unknown>, State = Record<stri
     exitAnimation?: Animation | null;
     settings: Settings;
     state?: State;
-}
+};
 
-export type WidgetOverlayEvent<Settings = Record<string, unknown>, State = Record<string, unknown>> = {
+export type WidgetOverlayEvent<
+    Settings = Record<string, unknown>,
+    State = Record<string, unknown>
+> = {
     name: "show" | "settings-update" | "state-update" | "message" | "remove";
     data: {
-        widgetConfig: Pick<OverlayWidgetConfig<Settings, State>, "id" | "name" | "type" | "position" | "entryAnimation" | "exitAnimation" | "settings" | "state" | "overlayInstance" | "zIndex">;
+        widgetConfig: Pick<
+            OverlayWidgetConfig<Settings, State>,
+            | "id"
+            | "name"
+            | "type"
+            | "position"
+            | "entryAnimation"
+            | "exitAnimation"
+            | "settings"
+            | "state"
+            | "overlayInstance"
+            | "zIndex"
+        >;
         widgetType: Pick<OverlayWidgetType, "id" | "userCanConfigure">;
         previewMode: boolean;
         /**
@@ -168,21 +191,21 @@ export type WidgetOverlayEvent<Settings = Record<string, unknown>, State = Recor
          */
         messageData?: unknown;
     };
-}
+};
 
 /**
  * Utility functions for managing overlay widgets. These functions can used within the overlayExtension.eventHandler
  */
 export interface IOverlayWidgetUtils {
-    handleOverlayEvent(generateWidgetHtml: (widgetConfig: WidgetOverlayEvent["data"]["widgetConfig"]) => string): void;
+    handleOverlayEvent(
+        generateWidgetHtml: (
+            widgetConfig: WidgetOverlayEvent["data"]["widgetConfig"]
+        ) => string
+    ): void;
     getWidgetPositionStyle(position?: Position): string;
     getWidgetElement(): HTMLElement | null;
-    initializeWidget(
-        html: string
-    ): void;
-    updateWidgetContent(
-        newHtml: string,
-    ): void;
+    initializeWidget(html: string): void;
+    updateWidgetContent(newHtml: string): void;
     removeWidget(): void;
     stylesToString(styles: Record<string, string | number | undefined>): string;
 }
