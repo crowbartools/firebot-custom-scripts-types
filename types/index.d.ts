@@ -34,6 +34,8 @@ import { ParametersConfig } from "./modules/firebot-parameters";
 import { NotificationManager } from "./modules/notification-manager";
 import { UIExtensionManager } from "./modules/ui-extension-manager";
 import { WebhookManager } from "./modules/webhook-manager";
+import { OverlayWidgetConfigManager } from "./modules/overlay-widget-config-manager";
+import { OverlayWidgetsManager } from "./modules/overlay-widgets-manager";
 
 export type UserAccount = {
     username: string;
@@ -84,6 +86,8 @@ export type ScriptModules = {
     moment: typeof Moment;
     notificationManager: NotificationManager;
     path: typeof Path;
+    overlayWidgetConfigManager: OverlayWidgetConfigManager;
+    overlayWidgetsManager: OverlayWidgetsManager;
     quotesManager: QuotesManager;
     replaceVariableManager: ReplaceVariableManager;
     replaceVariableFactory: ReplaceVariableFactory;
