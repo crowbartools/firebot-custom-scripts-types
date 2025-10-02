@@ -163,6 +163,7 @@ export type TwitchApi = {
         getAllUserEmotes(account?: "streamer" | "bot"): Promise<HelixUserEmote[]>;
     };
     clips: {
+        createClip(): Promise<HelixClip>;
         getClipFromClipUrl(url: string): Promise<HelixClip>;
         getRandomClipForUserById(
             userId: UserIdResolvable,
@@ -177,6 +178,14 @@ export type TwitchApi = {
             isFeatured?: boolean,
             startDate?: Date,
             endDate?: Date
+        ): Promise<HelixClip>;
+        getLatestClipForUserById(
+            userId: UserIdResolvable,
+            isFeatured?: boolean
+        ): Promise<HelixClip>;
+        getLatestClipForUserByName(
+            username: string,
+            isFeatured?: boolean
         ): Promise<HelixClip>;
     };
     goals: {
