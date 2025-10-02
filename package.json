@@ -24,8 +24,8 @@
         "@twurple/api": "^7.4.0",
         "@twurple/auth": "^7.4.0",
         "@types/angular": "^1.8.4",
-        "@types/express": "^4.17.21",
-        "@types/node": "^20.17.12",
+        "@types/express": "^5.0.3",
+        "@types/node": "^22.18.8",
         "moment": "^2.24.0",
         "tiny-typed-emitter": "^2.1.0"
     },
