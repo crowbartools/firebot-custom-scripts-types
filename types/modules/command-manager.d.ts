@@ -1,5 +1,6 @@
 import { Effects } from "../effects";
 import EffectList = Effects.EffectList;
+import { Awaitable } from "../util-types";
 
 type CommandType = "system" | "custom";
 
@@ -114,7 +115,7 @@ export type SystemCommand<CD extends CommandDefinition = CommandDefinition> = {
     definition: CD;
     onTriggerEvent: (
         event: SystemCommandTriggerEvent
-    ) => PromiseLike<void> | void;
+    ) => Awaitable<void>;
 };
 
 type CommandManager = {

@@ -1,6 +1,10 @@
-import { Effects } from "../effects";
-import TriggersObject = Effects.TriggersObject;
-import Trigger = Effects.Trigger;
+import { Trigger, TriggerType, TriggerMeta, TriggersObject } from "../triggers";
+import { Awaitable } from "../util-types";
+
+type VariableUsage = {
+    usage: string;
+    description?: string;
+};
 
 export type ReplaceVariable = {
     definition: {
@@ -8,10 +12,9 @@ export type ReplaceVariable = {
         aliases?: string[];
         usage?: string;
         description: string;
-        examples?: Array<{
-            usage: string;
-            description: string;
-        }>;
+        examples?: VariableUsage[];
+        hasSuggestions?: boolean;
+        noSuggestionsText?: string;
         categories?: VariableCategory[];
         triggers?: TriggersObject;
         possibleDataOutput: Array<
@@ -19,6 +22,7 @@ export type ReplaceVariable = {
         >;
         hidden?: boolean;
     };
+    getSuggestions?: (triggerType: TriggerType, triggerMeta?: TriggerMeta) => Awaitable<VariableUsage[]>;
     evaluator(trigger: Trigger, ...args: any[]): any;
 };
 

@@ -1,4 +1,5 @@
 import ng from "angular";
+import { Trigger, TriggerType, TriggersObject } from "./triggers";
 
 interface EffectScope<EffectModel> extends ng.IScope {
     effect: EffectModel;
@@ -21,40 +22,6 @@ type EffectTriggerResponse<Outputs = Record<string, unknown>> = {
 };
 
 export namespace Effects {
-    type TriggerType =
-        | "api"
-        | "channel_reward"
-        | "command"
-        | "counter"
-        | "custom_script"
-        | "event"
-        | "hotkey"
-        | "preset"
-        | "quick_action"
-        | "scheduled_task"
-        | "startup_script"
-        | "timer"
-        | "manual";
-
-    type Trigger = {
-        type: TriggerType;
-        metadata: {
-            username: string;
-            hotkey?: any;
-            command?: any;
-            userCommand?: { trigger: string; args: string[] };
-            chatMessage?: any;
-            event?: { id: string; name: string };
-            eventSource?: { id: string; name: string };
-            eventData?: Record<string, unknown>;
-            [x: string]: unknown;
-        };
-    };
-
-    type TriggersObject = {
-        [T in TriggerType]?: T extends "event" ? string[] | boolean : boolean;
-    };
-
     type EffectCategory =
         | "common"
         | "chat based"

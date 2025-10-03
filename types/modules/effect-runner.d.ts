@@ -1,5 +1,4 @@
-import { Effects } from "../effects";
-import Trigger = Effects.Trigger;
+import { Trigger } from "../triggers";
 
 type EffectRunnerOutput = {
     success: boolean;

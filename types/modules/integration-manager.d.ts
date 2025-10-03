@@ -1,3 +1,4 @@
+import { Awaitable } from "../util-types";
 import {
     FirebotParameterCategories,
     FirebotParams,
@@ -77,15 +78,15 @@ export interface IntegrationController<
     init(
         linked: boolean,
         integrationData: IntegrationData<Params>
-    ): void | PromiseLike<void>;
-    link?(linkData: LinkData): void | PromiseLike<void>;
+    ): Awaitable<void>;
+    link?(linkData: LinkData): Awaitable<void>;
     connect?(
         integrationData: IntegrationData<Params>
-    ): void | PromiseLike<void>;
-    disconnect?(): void | PromiseLike<void>;
+    ): Awaitable<void>;
+    disconnect?(): Awaitable<void>;
     onUserSettingsUpdate?(
         integrationData: IntegrationData<Params>
-    ): void | PromiseLike<void>;
+    ): Awaitable<void>;
 }
 
 type ObjectOfUnknowns = {

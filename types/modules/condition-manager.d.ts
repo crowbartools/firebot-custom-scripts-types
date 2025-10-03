@@ -1,8 +1,5 @@
 import EventEmitter from "events";
-import { Effects } from "../effects";
-import Trigger = Effects.Trigger;
-import TriggerType = Effects.TriggerType;
-import TriggersObject = Effects.TriggersObject;
+import { Trigger, TriggerType, TriggersObject } from "../triggers";
 
 type PresetValue = {
     value: string;

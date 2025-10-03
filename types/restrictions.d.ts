@@ -1,7 +1,4 @@
-import { Effects } from "./effects";
-import Trigger = Effects.Trigger;
-import TriggerType = Effects.TriggerType;
-import TriggersObject = Effects.TriggersObject;
+import { Trigger, TriggerType, TriggersObject } from "./triggers";
 
 interface RestrictionScope<RestrictionModel> extends ng.IScope {
     restriction: RestrictionType<RestrictionModel>;
