@@ -7,6 +7,11 @@ export type EventSource = {
         description: string;
         cached?: boolean;
         manualMetadata?: Record<string, unknown>;
+        isIntegration?: boolean;
+        activityFeed?: {
+            icon: string;
+            getMessage: (eventData: Record<string, unknown>) => string;
+        }
     }>;
 };
 
