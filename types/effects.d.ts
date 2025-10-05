@@ -71,6 +71,15 @@ export namespace Effects {
             triggers?: TriggerType[] | TriggersObject;
             dependencies?: Array<"chat">;
             outputs?: EffectOutput<Outputs>[];
+            /**
+             * If true, this effect cannot be aborted via the "Timeout" feature
+             */
+            exemptFromTimeouts?: boolean;
+            /**
+             * Keys of the effect model that should be exempt from having variables replaced in them automatically.
+             * This is useful when you want to run variable replacement manually, or not at all.
+             */
+            keysExemptFromAutoVariableReplacement?: Array<keyof EffectModel>;
         };
         optionsTemplate: string;
         optionsController?: (
