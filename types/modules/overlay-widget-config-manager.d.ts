@@ -7,7 +7,7 @@ export type OverlayWidgetConfigManager = {
      * @param isNew Whether this is a new widget. Default is `false`.
      * @returns A {@linkcode OverlayWidgetConfig} object representing the saved widget
      */
-    saveWidgetConfig: (config: OverlayWidgetConfig, isNew: boolean) => OverlayWidgetConfig;
+    saveWidgetConfig: (config: OverlayWidgetConfig, isNew?: boolean) => OverlayWidgetConfig;
 
     /**
      * Removes an overlay widget config by the given ID

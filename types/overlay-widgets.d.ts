@@ -1,4 +1,4 @@
-import { FirebotParameterArray } from "./modules/firebot-parameters";
+import { FirebotParameterArray, FontOptions } from "./modules/firebot-parameters";
 import { Awaitable } from "./util-types";
 
 export type Position = {
@@ -46,7 +46,6 @@ export type WidgetUIAction<
     id: string;
     label: string;
     icon: string;
-    // eslint-disable-next-line no-use-before-define
     click: (
         config: OverlayWidgetConfig<Settings, State>
     ) => Awaitable<{
@@ -114,7 +113,6 @@ export type OverlayWidgetType<
      * This is shown in the overlay widget list to give the user a quick overview of the widget's state.
      * If null or undefined, no state display is shown.
      */
-    // eslint-disable-next-line no-use-before-define
     stateDisplay?: (
         config: OverlayWidgetConfig<Settings, State>
     ) => string | null;
@@ -144,15 +142,16 @@ export type OverlayWidgetType<
             js?: string[];
             globalStyles?: string;
         };
-        // eslint-disable-next-line no-use-before-define
         eventHandler: (
             event: WidgetOverlayEvent,
-            utils: IOverlayWidgetUtils
+            utils: IOverlayWidgetEventUtils
         ) => void;
         /**
          * Called when the overlay is loaded. Can be async.
          */
-        onInitialLoad?: () => void | Promise<void>;
+        onInitialLoad?: (
+            utils: IOverlayWidgetInitUtils
+        ) => void | Promise<void>;
     };
 };
 
@@ -216,16 +215,29 @@ export type WidgetOverlayEvent<
 /**
  * Utility functions for managing overlay widgets. These functions can used within the overlayExtension.eventHandler
  */
-export interface IOverlayWidgetUtils {
+export interface IOverlayWidgetEventUtils {
+    /**
+     * Automatically handles overlay events for the widget, including showing, updating, and removing the widget using the provided HTML generator function.
+     *
+     * @param generateWidgetHtml Function that generates the HTML for the widget based on its current configuration.
+     * @param updateOnMessage If true, the widget HTML will be updated when a "message" event is received. Default is false.
+     */
     handleOverlayEvent(
         generateWidgetHtml: (
             widgetConfig: WidgetOverlayEvent["data"]["widgetConfig"]
-        ) => string
+        ) => string,
+        updateOnMessage?: boolean
     ): void;
     getWidgetPositionStyle(position?: Position): string;
-    getWidgetElement(): HTMLElement | null;
+    getWidgetContainerElement(): HTMLElement | null;
     initializeWidget(html: string): void;
     updateWidgetContent(newHtml: string): void;
+    updateWidgetPosition(): void;
     removeWidget(): void;
     stylesToString(styles: Record<string, string | number | undefined>): string;
+    getFontOptionsStyles(fontOptions?: FontOptions): Record<string, string | number | undefined>;
+}
+
+export interface IOverlayWidgetInitUtils {
+    getWidgetContainerElements(): NodeListOf<HTMLElement>;
 }

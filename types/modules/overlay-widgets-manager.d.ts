@@ -1,5 +1,12 @@
-import { IOverlayWidgetUtils, OverlayWidgetConfig, OverlayWidgetType, WidgetOverlayEvent } from "../overlay-widgets";
-import { FirebotParameterArray } from "../parameters";
+import {
+    IOverlayWidgetEventUtils,
+    IOverlayWidgetInitUtils,
+    OverlayWidgetConfig,
+    OverlayWidgetType,
+    WidgetOverlayEvent,
+    WidgetUIAction
+} from "../overlay-widgets";
+import { Awaitable } from "../util-types";
 
 export type OverlayWidgetsManager = {
     /**
@@ -18,25 +25,18 @@ export type OverlayWidgetsManager = {
     /**
      * Gets an array of the currently registered overlay widget types, formatted for Firebot frontend use
      */
-    getOverlayWidgetTypesForFrontend: () => Array<{
-        id: string;
-        name: string;
-        description: string;
-        icon: string;
-        settingsSchema?: FirebotParameterArray<Record<string, unknown>>;
-        userCanConfigure?: {
-            position?: boolean;
-            zIndex?: boolean;
-            entryAnimation?: boolean;
-            exitAnimation?: boolean;
-        },
-        supportsLivePreview?: boolean;
-        initialState?: Record<string, unknown>;
-        initialAspectRatio?: {
-            width: number;
-            height: number;
-        };
-    }>;
+    getOverlayWidgetTypesForFrontend: () => Array<
+        Pick<OverlayWidgetType,
+            | "id"
+            | "name"
+            | "icon"
+            | "description"
+            | "settingsSchema"
+            | "userCanConfigure"
+            | "supportsLivePreview"
+            | "initialState"
+            | "initialAspectRatio"
+        > & { uiActions?: Omit<WidgetUIAction, "click">[] }>;
 
     /**
      * Gets an array of overlay extensions for all registered overlay widget types
@@ -48,8 +48,11 @@ export type OverlayWidgetsManager = {
             js?: string[];
             globalStyles?: string;
         };
-        eventHandler: (event: WidgetOverlayEvent<Record<string, unknown>, Record<string, unknown>>, utils: IOverlayWidgetUtils) => void;
-        onInitialLoad?: () => void | Promise<void>;
+        eventHandler: (
+            event: WidgetOverlayEvent<Record<string, unknown>, Record<string, unknown>>,
+            utils: IOverlayWidgetEventUtils
+        ) => void;
+        onInitialLoad?: (utils: IOverlayWidgetInitUtils) => Awaitable<void>;
     }>;
 
     /**
@@ -62,7 +65,7 @@ export type OverlayWidgetsManager = {
     sendWidgetEventToOverlay: <EventName extends WidgetOverlayEvent["name"]>(
         eventName: EventName,
         widgetConfig: OverlayWidgetConfig,
-        messageInfo: EventName extends "message" ? { messageName: string; messageData?: unknown } : undefined,
-        previewMode: boolean
+        messageInfo?: EventName extends "message" ? { messageName: string; messageData?: unknown } : undefined,
+        previewMode?: boolean
     ) => Promise<void>;
 }
