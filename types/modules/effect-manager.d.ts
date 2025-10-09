@@ -22,4 +22,20 @@ export type EffectManager = {
      * @param effectId ID of the effect to unregister
      */
     unregisterEffect: (effectId: string) => void;
+
+    /**
+     * Adds an event trigger to an existing Firebot effect
+     * @param effectId ID of the effect
+     * @param eventSourceId Event source ID of the event to add
+     * @param eventId Event ID of the event to add
+     */
+    addEventToEffect: (effectId: string, eventSourceId: string, eventId: string) => void;
+    
+    /**
+     * Removes an event trigger from an existing Firebot effect
+     * @param effectId ID of the effect
+     * @param eventSourceId Event source ID of the event to remove
+     * @param eventId Event ID of the event to remove
+     */
+    removeEventFromEffect: (effectId: string, eventSourceId: string, eventId: string) => void;
 };
