@@ -150,6 +150,22 @@ export type TwitchApi = {
         getCurrentCharityFundraiserGoal(): Promise<number>;
     };
     chat: {
+        /**
+         * Sends a chat message to the streamer's chat.
+         *
+         * @param message Chat message to send.
+         * @param replyToMessageId The ID of the message this should be replying to. If not replying to a message, use `null`.
+         * @param sendAsBot If the chat message should be sent as the bot or not.
+         * If this is set to `false` or the bot account is not logged in, the chat message will be sent as the streamer.
+         * Default is `false`.
+         * @returns `true` if sending the chat message was successful or `false` if it failed
+         */
+        sendChatMessage(
+            message: string,
+            replyToMessageId?: string,
+            sendAsBot?: boolean
+        ): Promise<boolean>;
+        
         getAllChatters(): Promise<HelixChatChatter[]>;
         sendShoutout(targetUserId: string): Promise<ResultWithError<undefined, string>>;
         deleteChatMessage(messageId: string): Promise<boolean>;

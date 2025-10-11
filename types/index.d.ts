@@ -99,6 +99,9 @@ export type ScriptModules = {
     spawn: typeof ChildProcess["spawn"];
     scriptDataDir: string;
     twitchApi: TwitchApi;
+    /**
+     * @deprecated Use the `twitchApi.chat` class instead.
+     */
     twitchChat: TwitchChat;
     /** Added in Firebot v5.64 */
     uiExtensionManager?: UIExtensionManager;
