@@ -19,6 +19,7 @@ import {
     HelixUser,
     HelixUserEmote,
     HelixUserRelation,
+    HelixVideo,
     UserIdResolvable,
 } from "@twurple/api";
 
@@ -281,6 +282,14 @@ export type TwitchApi = {
             reason?: "spam" | "harassment" | "other"
         ): Promise<boolean>;
         unblockUser(userId: UserIdResolvable): Promise<boolean>;
+    };
+    videos: {
+        /**
+         * Gets the VOD object for the specified stream
+         * @param streamId ID of the stream
+         * @returns A {@linkcode HelixVideo} object representing the VOD
+         */
+        getVodByStreamId(streamId: string): Promise<HelixVideo>
     };
     whispers: {
         sendWhisper(
