@@ -251,6 +251,7 @@ export type TwitchApi = {
     streams: {
         createStreamMarker(description?: string): Promise<void>;
         getStreamersCurrentStream(): Promise<HelixStream | null>;
+        getStreamUptime(): Promise<string>;
     };
     subscriptions: {
         getSubscriberCount(): Promise<number>;
