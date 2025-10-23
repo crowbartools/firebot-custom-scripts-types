@@ -97,7 +97,6 @@ export type ScriptModules = {
     request: unknown;
     restrictionManager: RestrictionManager;
     spawn: typeof ChildProcess["spawn"];
-    scriptDataDir: string;
     twitchApi: TwitchApi;
     /**
      * @deprecated Use the `twitchApi.chat` class instead.
@@ -133,6 +132,7 @@ export type RunRequest<P extends Record<string, unknown>> = {
         version: string;
     };
     trigger: Trigger;
+    scriptDataDir: string;
 };
 
 export type ScriptReturnObject = {
