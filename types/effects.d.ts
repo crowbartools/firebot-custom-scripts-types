@@ -24,11 +24,14 @@ type EffectTriggerResponse<Outputs = Record<string, unknown>> = {
 export namespace Effects {
     type EffectCategory =
         | "common"
+        | "twitch"
+        | "moderation"
         | "chat based"
-        | "Moderation"
+        | "dashboard"
         | "overlay"
         | "fun"
         | "integrations"
+        | "firebot control"
         | "advanced"
         | "scripting";
 
