@@ -1,4 +1,7 @@
-import { FirebotParameterArray, FontOptions } from "./modules/firebot-parameters";
+import {
+    FirebotParameterArray,
+    FontOptions,
+} from "./modules/firebot-parameters";
 import { Awaitable } from "./util-types";
 
 export type Position = {
@@ -19,14 +22,13 @@ export type Animation = {
     duration?: number;
 };
 
-type WidgetEvent<Settings, State> = {
-    id: string;
-    settings: Settings;
-    state: State;
+type WidgetEvent<Settings, State> = OverlayWidgetConfig<Settings, State> & {
     previewMode: boolean;
+    previousState?: State;
+    persisted?: boolean;
 };
 
-type WidgetEventResult<State> = {
+export type WidgetEventResult<State> = {
     newState?: State | null;
     /**
      * If true, the new state will be persisted to file.
@@ -35,9 +37,11 @@ type WidgetEventResult<State> = {
     persistState?: boolean;
 };
 
-export type WidgetEventHandler<Settings, State> = (
-    event: WidgetEvent<Settings, State>
-) => Awaitable<WidgetEventResult<State> | undefined>;
+export type WidgetEventHandler<
+    Settings,
+    State,
+    Return = WidgetEventResult<State>
+> = (event: WidgetEvent<Settings, State>) => Awaitable<Return | undefined>;
 
 export type WidgetUIAction<
     Settings extends Record<string, unknown> = Record<string, unknown>,
@@ -46,6 +50,7 @@ export type WidgetUIAction<
     id: string;
     label: string;
     icon: string;
+
     click: (
         config: OverlayWidgetConfig<Settings, State>
     ) => Awaitable<{
@@ -92,6 +97,12 @@ export type OverlayWidgetType<
      * Settings allow the user to customize the widget instance (e.g., font to use, colors, etc.)
      */
     settingsSchema?: FirebotParameterArray<Settings>;
+
+    /**
+     * Array of setting keys that cannot be edited in the Update Overlay Widget Settings effect.
+     */
+    nonEditableSettings?: (keyof Settings)[];
+
     /**
      * Initial state for the widget instance (e.g., current count for a counter widget)
      */
@@ -113,6 +124,7 @@ export type OverlayWidgetType<
      * This is shown in the overlay widget list to give the user a quick overview of the widget's state.
      * If null or undefined, no state display is shown.
      */
+
     stateDisplay?: (
         config: OverlayWidgetConfig<Settings, State>
     ) => string | null;
@@ -130,6 +142,10 @@ export type OverlayWidgetType<
      */
     onSettingsUpdate?: WidgetEventHandler<Settings, State>;
     /**
+     * Called when the widget state is updated. You can't modify state here (would cause infinite loop).
+     */
+    onStateUpdate?: WidgetEventHandler<Settings, State, void>;
+    /**
      * Called before the widget is removed from the overlay. You can modify state here.
      */
     onRemove?: WidgetEventHandler<Settings, State>;
@@ -142,6 +158,7 @@ export type OverlayWidgetType<
             js?: string[];
             globalStyles?: string;
         };
+
         eventHandler: (
             event: WidgetOverlayEvent,
             utils: IOverlayWidgetEventUtils
@@ -149,9 +166,7 @@ export type OverlayWidgetType<
         /**
          * Called when the overlay is loaded. Can be async.
          */
-        onInitialLoad?: (
-            utils: IOverlayWidgetInitUtils
-        ) => void | Promise<void>;
+        onInitialLoad?: (utils: IOverlayWidgetInitUtils) => Awaitable<void>;
     };
 };
 
@@ -235,7 +250,9 @@ export interface IOverlayWidgetEventUtils {
     updateWidgetPosition(): void;
     removeWidget(): void;
     stylesToString(styles: Record<string, string | number | undefined>): string;
-    getFontOptionsStyles(fontOptions?: FontOptions): Record<string, string | number | undefined>;
+    getFontOptionsStyles(
+        fontOptions?: FontOptions
+    ): Record<string, string | number | undefined>;
 }
 
 export interface IOverlayWidgetInitUtils {
