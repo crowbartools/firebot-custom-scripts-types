@@ -83,6 +83,11 @@ export namespace Effects {
              * This is useful when you want to run variable replacement manually, or not at all.
              */
             keysExemptFromAutoVariableReplacement?: Array<keyof EffectModel>;
+            /**
+             * If true, this effect does nothing when triggered (ex Comment effect)
+             * No-op effects are ignored by the random and sequential effects
+             */
+            isNoOp?: boolean;
         };
         optionsTemplate: string;
         optionsController?: (
@@ -117,10 +122,19 @@ export namespace Effects {
         };
     };
 
+    type EffectListRunMode = "all" | "random" | "sequential";
+
     type EffectList = {
-        id?: string;
-        queue?: string;
-        queueDuration?: number;
+        id: string;
         list: Effect[];
+        queue?: string;
+        queuePriority?: "high" | "none";
+        queueDuration?: number;
+        /**
+         * @default "all"
+         */
+        runMode?: EffectListRunMode;
+        weighted?: boolean;
+        dontRepeatUntilAllUsed?: boolean;
     };
 }
