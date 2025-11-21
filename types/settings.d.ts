@@ -43,7 +43,7 @@ export type FirebotSettingsTypes = {
     ChatShowBttvEmotes: boolean;
     ChatShowFfzEmotes: boolean;
     ChatShowSevenTvEmotes: boolean;
-    ChatTaggedNotificationSound: { name: string, path?: string | undefined };
+    ChatTaggedNotificationSound: { name: string; path?: string | undefined };
     ChatTaggedNotificationVolume: number;
     ChatTimestamps: boolean;
     ClearChatFeedMode: "never" | "onlyStreamer" | "always";
@@ -74,10 +74,13 @@ export type FirebotSettingsTypes = {
     OpenStreamPreviewOnLaunch: boolean;
     OverlayInstances: string[];
     PersistCustomVariables: boolean;
-    QuickActions: Record<string, {
-        enabled: boolean;
-        position: number;
-    }>;
+    QuickActions: Record<
+        string,
+        {
+            enabled: boolean;
+            position: number;
+        }
+    >;
     RunCustomScripts: boolean;
     SeenAdvancedCommandModePopup: boolean;
     ShowAdBreakIndicator: boolean;
@@ -102,10 +105,12 @@ export type FirebotSettingsTypes = {
     WebServerPort: number;
     WhileLoopEnabled: boolean;
     WysiwygBackground: "black" | "white";
-}
+};
 
 type UpdatedEvents = {
-    [Key in keyof FirebotSettingsTypes as `settings:setting-updated:${Key}`]: (data: FirebotSettingsTypes[Key]) => void;
+    [Key in keyof FirebotSettingsTypes as `settings:setting-updated:${Key}`]: (
+        data: FirebotSettingsTypes[Key]
+    ) => void;
 };
 type DeletedEvents = {
     [Key in keyof FirebotSettingsTypes as `settings:setting-deleted:${Key}`]: () => void;
@@ -166,7 +171,6 @@ export type FirebotSettings = TypedEmitter<SettingsEvents> & {
         settingName: SettingName,
         data: FirebotSettingsTypes[SettingName]
     ): void;
-
 
     // Everything below this is deprecated. Leaving them for back compat with scripts.
     // You should use either getSetting or saveSetting with the relevant setting name.

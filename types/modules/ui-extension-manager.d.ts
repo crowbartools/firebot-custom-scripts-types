@@ -19,7 +19,7 @@ export interface AngularJsFactory {
 
 export interface AngularJsComponent {
     name: string;
-    transclude?: boolean | string | {[slot: string]: string};
+    transclude?: boolean | string | { [slot: string]: string };
     bindings: Record<string, string>;
     template: string;
     controller: Function;
@@ -27,25 +27,27 @@ export interface AngularJsComponent {
 
 export interface AngularJsDirective {
     name: string;
-    function: (...args: unknown[]) => {
+    function: (
+        ...args: unknown[]
+    ) => {
         compile?: Function;
         controller?: Function;
         link?: Function;
         multiElement?: boolean;
         name?: string;
         priority?: number;
-        require?: string | string[] | {[controller: string]: string};
+        require?: string | string[] | { [controller: string]: string };
         restrict?: string;
         scope?: boolean | object;
         template?: string;
         terminal?: boolean;
-        transclude?: boolean | string | {[slot: string]: string};
+        transclude?: boolean | string | { [slot: string]: string };
     };
 }
 
 export interface AngularJsFilter {
     name: string;
-    function: { (...args: unknown[]): Function; };
+    function: { (...args: unknown[]): Function };
 }
 
 export interface UIExtension {

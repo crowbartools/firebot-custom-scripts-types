@@ -24,7 +24,7 @@ export type Utils = {
      * @param num e.g. `10000`, will be turned into `10,000`.
      */
     commafy: (num: string) => string;
-    
+
     /**
      * Returns a copy of the `array` with the elements in a shuffled order.
      * @param array the elements of which should be shuffled.
@@ -54,9 +54,12 @@ export type Utils = {
      * @param seconds The number of seconds to be processed
      * @param format The output format to use
      */
-    humanizeTime: (seconds: number,format: "default" | "short" | "simple") => string;
+    humanizeTime: (
+        seconds: number,
+        format: "default" | "short" | "simple"
+    ) => string;
 
-    /** 
+    /**
      * @deprecated Use `twitchApi.streams.getStreamUptime` instead.
      */
     getUptime: () => Promise<string>;

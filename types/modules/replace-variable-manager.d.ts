@@ -22,7 +22,10 @@ export type ReplaceVariable = {
         >;
         hidden?: boolean;
     };
-    getSuggestions?: (triggerType: TriggerType, triggerMeta?: TriggerMeta) => Awaitable<VariableUsage[]>;
+    getSuggestions?: (
+        triggerType: TriggerType,
+        triggerMeta?: TriggerMeta
+    ) => Awaitable<VariableUsage[]>;
     evaluator(trigger: Trigger, ...args: any[]): any;
 };
 
@@ -53,7 +56,11 @@ export type ReplaceVariableManager = {
      * @param eventSourceId Event source ID of the event to add.
      * @param eventId Event ID of the event to add.
      */
-    addEventToVariable: (variableHandle: string, eventSourceId: string, eventId: string) => void;
+    addEventToVariable: (
+        variableHandle: string,
+        eventSourceId: string,
+        eventId: string
+    ) => void;
 
     /**
      * Removes an event trigger from an existing Firebot variable.
@@ -61,5 +68,9 @@ export type ReplaceVariableManager = {
      * @param eventSourceId Event source ID of the event to remove.
      * @param eventId Event ID of the event to remove.
      */
-    removeEventFromVariable: (variableHandle: string, eventSourceId: string, eventId: string) => void;
+    removeEventFromVariable: (
+        variableHandle: string,
+        eventSourceId: string,
+        eventId: string
+    ) => void;
 };

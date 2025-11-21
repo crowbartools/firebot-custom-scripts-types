@@ -4,7 +4,7 @@ type WebhookConfig = {
     id: string;
     name: string;
     scriptId: string;
-}
+};
 
 /**
  * Manages plugin webhooks serviced via the Crowbar API service

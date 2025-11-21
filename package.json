@@ -5,8 +5,8 @@
     "main": "",
     "scripts": {
         "lint": "npm run prettier:check",
-        "prettier:check": "prettier --check '**/*.{json,ts}'",
-        "prettier:format": "prettier --write '**/*.{json,ts}'"
+        "prettier:check": "prettier --check **/*.{json,ts}",
+        "prettier:format": "prettier --write **/*.{json,ts}"
     },
     "author": "ebiggz",
     "contributors": [

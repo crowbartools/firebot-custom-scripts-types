@@ -4,7 +4,7 @@ import {
     OverlayWidgetConfig,
     OverlayWidgetType,
     WidgetOverlayEvent,
-    WidgetUIAction
+    WidgetUIAction,
 } from "../overlay-widgets";
 import { Awaitable } from "../util-types";
 
@@ -13,7 +13,9 @@ export type OverlayWidgetsManager = {
      * Registers an overlay widget type with Firebot
      * @param overlayWidgetType The {@linkcode OverlayWidgetType} to register
      */
-    registerOverlayWidgetType: (overlayWidgetType: OverlayWidgetType<any, any>) => void;
+    registerOverlayWidgetType: (
+        overlayWidgetType: OverlayWidgetType<any, any>
+    ) => void;
 
     /**
      * Gets an overlay widget type by the given ID
@@ -26,7 +28,8 @@ export type OverlayWidgetsManager = {
      * Gets an array of the currently registered overlay widget types, formatted for Firebot frontend use
      */
     getOverlayWidgetTypesForFrontend: () => Array<
-        Pick<OverlayWidgetType,
+        Pick<
+            OverlayWidgetType,
             | "id"
             | "name"
             | "icon"
@@ -36,7 +39,8 @@ export type OverlayWidgetsManager = {
             | "supportsLivePreview"
             | "initialState"
             | "initialAspectRatio"
-        > & { uiActions?: Omit<WidgetUIAction, "click">[] }>;
+        > & { uiActions?: Omit<WidgetUIAction, "click">[] }
+    >;
 
     /**
      * Gets an array of overlay extensions for all registered overlay widget types
@@ -49,7 +53,10 @@ export type OverlayWidgetsManager = {
             globalStyles?: string;
         };
         eventHandler: (
-            event: WidgetOverlayEvent<Record<string, unknown>, Record<string, unknown>>,
+            event: WidgetOverlayEvent<
+                Record<string, unknown>,
+                Record<string, unknown>
+            >,
             utils: IOverlayWidgetEventUtils
         ) => void;
         onInitialLoad?: (utils: IOverlayWidgetInitUtils) => Awaitable<void>;
@@ -65,7 +72,9 @@ export type OverlayWidgetsManager = {
     sendWidgetEventToOverlay: <EventName extends WidgetOverlayEvent["name"]>(
         eventName: EventName,
         widgetConfig: OverlayWidgetConfig,
-        messageInfo?: EventName extends "message" ? { messageName: string; messageData?: unknown } : undefined,
+        messageInfo?: EventName extends "message"
+            ? { messageName: string; messageData?: unknown }
+            : undefined,
         previewMode?: boolean
     ) => Promise<void>;
-}
+};

@@ -11,7 +11,7 @@ export type EventSource = {
         activityFeed?: {
             icon: string;
             getMessage: (eventData: Record<string, unknown>) => string;
-        }
+        };
     }>;
 };
 

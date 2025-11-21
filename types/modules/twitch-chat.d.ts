@@ -1,5 +1,5 @@
 export type TwitchChat = {
-    /** 
+    /**
      * @deprecated Use `twitchApi.chat.sendChatMessage` instead.
      */
     sendChatMessage(

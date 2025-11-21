@@ -5,10 +5,7 @@ export type FrontendCommunicator = {
      * @param eventName The name of the event to send.
      * @param data Data to provide to the event handler.
      */
-    send<ExpectedArg = unknown>(
-        eventName: string,
-        data: ExpectedArg
-    ): void;
+    send<ExpectedArg = unknown>(eventName: string, data: ExpectedArg): void;
 
     /** Handle a synchronous event triggered by the frontend.
      * @template ExpectedArgs The type of data provided with the event.

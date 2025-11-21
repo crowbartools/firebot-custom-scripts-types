@@ -80,9 +80,7 @@ export interface IntegrationController<
         integrationData: IntegrationData<Params>
     ): Awaitable<void>;
     link?(linkData: LinkData): Awaitable<void>;
-    connect?(
-        integrationData: IntegrationData<Params>
-    ): Awaitable<void>;
+    connect?(integrationData: IntegrationData<Params>): Awaitable<void>;
     disconnect?(): Awaitable<void>;
     onUserSettingsUpdate?(
         integrationData: IntegrationData<Params>

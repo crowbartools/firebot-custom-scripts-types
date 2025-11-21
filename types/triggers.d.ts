@@ -17,7 +17,7 @@ export type TriggerType =
 export type TriggerMeta = {
     triggerId?: string;
     [x: string]: unknown;
-}
+};
 
 export type Trigger = {
     type: TriggerType;
@@ -27,17 +27,17 @@ export type Trigger = {
         command?: CommandDefinition;
         userCommand?: {
             trigger: string;
-            args: string[],
-            triggeredArg?: string,
-            triggeredSubcmd?: CommandDefinition,
-            subcommandId?: string
+            args: string[];
+            triggeredArg?: string;
+            triggeredSubcmd?: CommandDefinition;
+            subcommandId?: string;
         };
         chatMessage?: unknown;
         event?: { id: string; name: string };
         eventSource?: { id: string; name: string };
         eventData?: {
             chatMessage?: unknown;
-            [x: string]: unknown
+            [x: string]: unknown;
         };
         counter?: {
             id: string;

@@ -123,7 +123,9 @@ export type TwitchApi = {
         createCustomChannelReward(reward: CustomReward): Promise<CustomReward>;
         updateCustomChannelReward(reward: CustomReward): Promise<boolean>;
         deleteCustomChannelReward(rewardId: string): Promise<boolean>;
-        getOpenChannelRewardRedemptions(): Promise<Record<string, RewardRedemption[]>>;
+        getOpenChannelRewardRedemptions(): Promise<
+            Record<string, RewardRedemption[]>
+        >;
         approveOrRejectChannelRewardRedemption(
             request: RewardRedemptionsApprovalRequest
         ): Promise<boolean>;
@@ -139,9 +141,9 @@ export type TwitchApi = {
         getChannelInformationByUsername(
             username: string
         ): Promise<HelixChannel>;
-        getAdSchedule(): Promise<HelixAdSchedule>
+        getAdSchedule(): Promise<HelixAdSchedule>;
         triggerAdBreak(adLength?: number): Promise<boolean>;
-        snoozeAdBreak(): Promise<boolean>
+        snoozeAdBreak(): Promise<boolean>;
         raidChannel(targetUserId: string): Promise<boolean>;
         cancelRaid(): Promise<boolean>;
         getVips(): Promise<HelixUserRelation[]>;
@@ -166,18 +168,25 @@ export type TwitchApi = {
             replyToMessageId?: string,
             sendAsBot?: boolean
         ): Promise<boolean>;
-        
+
         getAllChatters(): Promise<HelixChatChatter[]>;
-        sendShoutout(targetUserId: string): Promise<ResultWithError<undefined, string>>;
+        sendShoutout(
+            targetUserId: string
+        ): Promise<ResultWithError<undefined, string>>;
         deleteChatMessage(messageId: string): Promise<boolean>;
         clearChat(): Promise<boolean>;
         setEmoteOnlyMode(enable?: boolean): Promise<boolean>;
-        setFollowerOnlyMode(enable?: boolean, duration?: number): Promise<boolean>;
+        setFollowerOnlyMode(
+            enable?: boolean,
+            duration?: number
+        ): Promise<boolean>;
         setSubscriberOnlyMode(enable?: boolean): Promise<boolean>;
         setSlowMode(enable?: boolean, duration?: number): Promise<boolean>;
         setUniqueMode(enable?: boolean): Promise<boolean>;
         getColorForUser(targetUserId: string): Promise<string>;
-        getAllUserEmotes(account?: "streamer" | "bot"): Promise<HelixUserEmote[]>;
+        getAllUserEmotes(
+            account?: "streamer" | "bot"
+        ): Promise<HelixUserEmote[]>;
     };
     clips: {
         createClip(): Promise<HelixClip>;
@@ -245,7 +254,10 @@ export type TwitchApi = {
         ): Promise<void>;
         lockPrediciton(predictionId: string): Promise<void>;
         cancelPrediction(predictionId: string): Promise<void>;
-        resolvePrediction(predictionId: string, outcomeId: string): Promise<void>
+        resolvePrediction(
+            predictionId: string,
+            outcomeId: string
+        ): Promise<void>;
         getMostRecentPrediction(): Promise<HelixPrediction>;
     };
     streams: {
@@ -290,7 +302,7 @@ export type TwitchApi = {
          * @param streamId ID of the stream
          * @returns A {@linkcode HelixVideo} object representing the VOD
          */
-        getVodByStreamId(streamId: string): Promise<HelixVideo>
+        getVodByStreamId(streamId: string): Promise<HelixVideo>;
     };
     whispers: {
         sendWhisper(
@@ -298,5 +310,5 @@ export type TwitchApi = {
             message: string,
             sendAsBot?: boolean
         ): Promise<boolean>;
-    }
+    };
 };

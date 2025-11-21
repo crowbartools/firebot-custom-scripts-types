@@ -20,7 +20,7 @@ export interface InvokePluginWebsocketMessage<TData = unknown> {
     pluginName: string;
     id: string | number;
     data?: TData;
-};
+}
 
 interface ServerManagerEvents {
     "overlay-connected"(instanceName?: string): void;
@@ -47,7 +47,7 @@ export type HttpServerManager = TypedEmitter<ServerManagerEvents> & {
      * custom plugin.
      * @param route The specific route to respond to.
      * @param method The HTTP method to respond to.
-     * @param callback A callback to invoke when a request is made to the custom route. 
+     * @param callback A callback to invoke when a request is made to the custom route.
      * @returns `true` if the custom route was successfully registered; otherwise, `false`.
      * @see HttpServerManager.unregisterCustomRoute
      */
@@ -107,7 +107,5 @@ export type HttpServerManager = TypedEmitter<ServerManagerEvents> & {
      * if no listeners were registered for the `pluginName`.
      * @see HttpServerManager.registerCustomWebSocketListener
      */
-    unregisterCustomWebSocketListener(
-        pluginName: string
-    ): boolean;
+    unregisterCustomWebSocketListener(pluginName: string): boolean;
 };
