@@ -20,6 +20,10 @@ export type ReplaceVariable = {
         possibleDataOutput: Array<
             "null" | "bool" | "number" | "text" | "array" | "object" | "ALL"
         >;
+        /**
+         * Indicates that the data returned by this variable may be sensitive, so users may not want to display it on-screen or in chat, or write the value to insecure locations (like log files)
+         */
+        sensitive?: boolean;
         hidden?: boolean;
     };
     getSuggestions?: (
