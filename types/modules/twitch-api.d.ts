@@ -10,7 +10,7 @@ import {
     HelixCheermoteList,
     HelixClip,
     HelixGoal,
-    HelixHypeTrainEvent,
+    HelixHypeTrain,
     HelixModerator,
     HelixPoll,
     HelixPrediction,
@@ -218,7 +218,7 @@ export type TwitchApi = {
         getCurrentChannelGoals(): Promise<HelixGoal[]>;
     };
     hypeTrain: {
-        getRecentHypeTrainEvents(): Promise<HelixHypeTrainEvent[]>;
+        getCurrentHypeTrain(): Promise<HelixHypeTrain>;
     };
     moderation: {
         isUserTimedOut(userId: UserIdResolvable): Promise<boolean>;
