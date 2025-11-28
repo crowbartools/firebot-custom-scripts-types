@@ -94,7 +94,6 @@ export type ScriptModules = {
     replaceVariableManager: ReplaceVariableManager;
     replaceVariableFactory: ReplaceVariableFactory;
     resourceTokenManager: ResourceTokenManager;
-    request: unknown;
     restrictionManager: RestrictionManager;
     spawn: typeof ChildProcess["spawn"];
     twitchApi: TwitchApi;
