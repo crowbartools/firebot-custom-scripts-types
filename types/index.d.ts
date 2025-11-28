@@ -78,6 +78,7 @@ export type ScriptModules = {
     eventManager: EventManager;
     firebotRolesManager: FirebotRolesManager;
     frontendCommunicator: FrontendCommunicator;
+    /** @deprecated This will be removed in Firebot 5.66. Use node's built-in `fs` modules instead. */
     fs: typeof FS;
     gameManager: GameManager;
     howler: unknown;
