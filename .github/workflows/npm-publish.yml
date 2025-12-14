@@ -1,5 +1,8 @@
 name: Publish To NPM
 
+permissions:
+  id-token: write
+
 on:
   release:
     types: [created]
@@ -26,5 +29,3 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
