@@ -2,6 +2,9 @@
     "name": "@crowbartools/firebot-custom-scripts-types",
     "version": "5.65.1",
     "description": "Types for Firebot's Custom Scripts",
+    "repository": {
+        "url": "https://github.com/crowbartools/firebot-custom-scripts-types"
+    },
     "main": "",
     "scripts": {
         "lint": "npm run prettier:check",
